@@ -15,7 +15,7 @@ option(DEBUG "Set ON to enable debug prints" OFF)
 # ---------------------------------------------------------------------------- #
 # Compile the Library                                                          #
 # ---------------------------------------------------------------------------- #
-add_library(wright STATIC src/wright.c src/wright.f90)
+add_library(wright STATIC src/wright.c src/wrightmod.f90)
 target_include_directories(wright PUBLIC
 	"${PROJECT_BINARY_DIR}")
 target_link_libraries(wright PUBLIC "-larb -lflint -lm")
@@ -33,6 +33,9 @@ add_custom_command(
        COMMAND ${CMAKE_COMMAND} -E copy
                ${CMAKE_SOURCE_DIR}/test/input.inp
 						   ${CMAKE_CURRENT_BINARY_DIR}/input.inp)
+
+add_executable(mainarditest test/mainarditest.f90 src/wrightmod.f90)
+target_link_libraries(wrighttest PUBLIC wright)
 
 # ---------------------------------------------------------------------------- #
 # Compile the docs                                                             #

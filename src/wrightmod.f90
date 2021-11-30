@@ -34,8 +34,8 @@ module wrightmod
   implicit none
 
   ! Constants
-  real(real32), parameter :: S_PI = 3.14159
-  real(real64), parameter :: D_PI = 3.141592653589793
+  real(real32), parameter :: S_PI = 3.1415926535897932384626433832795
+  real(real64), parameter :: D_PI = 3.1415926535897932384626433832795
   real(real128), parameter :: T_PI = 3.1415926535897932384626433832795
 
   real(real32), parameter :: sone = 1.0_real32
@@ -78,18 +78,18 @@ contains
     real(real64) :: h,gamma
     complex(real64) :: uk,zk,zpk,sk
 
-    N = ceiling(-3.0/(2.0*D_PI)*log(1d-16),kind=kind(N));
+    N = ceiling(-(3.0_real64)/((2.0_real64)*D_PI)*log(1d-32),kind=kind(N));
     h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-16);
+    gamma = -((1.0_real64)/((8.0_real64)*t))*log(1d-32);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real64,0.0_real64)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(donei*uk + done)**2
-      zpk = 2.0*gamma*donei*(donei*uk + done)
+      zpk = (2.0_real64)*gamma*donei*(donei*uk + done)
       sk = sk + exp(zk*t - abs(x)*zk**(-lambda))*zk**(-mu)*zpk
     end do quadrature
-    sk = h*sk/(2.0*D_PI*donei)
+    sk = h*sk/((2.0_real64)*D_PI*donei)
 
     w = RealPart(sk)
 
@@ -109,18 +109,18 @@ contains
     real(real32) :: h,gamma
     complex(real32) :: uk,zk,zpk,sk
 
-    N = ceiling(-3.0/(2.0*S_PI)*log(1d-6),kind=kind(N));
-    h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-6);
+    N = ceiling(-(3.0_real32)/((2.0_real32)*S_PI)*log(1d-12),kind=kind(N));
+    h = (3.0_real32)/N
+    gamma = -(1.0_real32/(8.0_real32*t))*log(1d-12);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real32,0.0_real32)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(sonei*uk + done)**2
-      zpk = 2.0*gamma*sonei*(sonei*uk + sone)
+      zpk = (2.0_real32)*gamma*sonei*(sonei*uk + sone)
       sk = sk + exp(zk*t - abs(x)*zk**(-lambda))*zk**(-mu)*zpk
     end do quadrature
-    sk = h*sk/(2.0*S_PI*donei)
+    sk = h*sk/((2.0_real32)*S_PI*donei)
 
     w = RealPart(sk)
 
@@ -140,18 +140,18 @@ contains
     real(real128) :: h,gamma
     complex(real128) :: uk,zk,zpk,sk
 
-    N = ceiling(-3.0/(2.0*T_PI)*log(1d-32),kind=kind(N));
-    h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-32);
+    N = ceiling(-(3.0_real128)/((2.0_real128)*T_PI)*log(1d-64),kind=kind(N));
+    h = (3.0_real128)/N
+    gamma = -(1.0_real128/(8.0_real128*t))*log(1d-64);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real128,0.0_real128)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(tonei*uk + done)**2
-      zpk = 2.0*gamma*tonei*(tonei*uk + tone)
+      zpk = (2.0_real128)*gamma*tonei*(tonei*uk + tone)
       sk = sk + exp(zk*t - abs(x)*zk**(-lambda))*zk**(-mu)*zpk
     end do quadrature
-    sk = h*sk/(2.0*T_PI*tonei)
+    sk = h*sk/((2.0_real128)*T_PI*tonei)
 
     w = RealPart(sk)
 
@@ -184,20 +184,20 @@ contains
 
     allocate(sk(m))
 
-    N = ceiling(-3.0/(2.0*D_PI)*log(1d-16),kind=kind(N));
-    h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-16);
+    N = ceiling(-(3.0_real64)/((2.0_real64)*D_PI)*log(1d-32),kind=kind(N));
+    h = (3.0_real64)/N
+    gamma = -(1.0_real64/(8.0_real64*t))*log(1d-32);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real64,0.0_real64)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(donei*uk + done)**2
-      zpk = 2.0*gamma*donei*(donei*uk + done)
+      zpk = (2.0_real64)*gamma*donei*(donei*uk + done)
       do l=1,m
         sk(l) = sk(l) + exp(zk*t - abs(x(l))*zk**(-lambda))*zk**(-mu)*zpk
       end do
     end do quadrature
-    sk = h*sk/(2.0*D_PI*donei)
+    sk = h*sk/((2.0_real64)*D_PI*donei)
 
     w = RealPart(sk)
 
@@ -231,20 +231,20 @@ contains
 
     allocate(sk(m))
 
-    N = ceiling(-3.0/(2.0*S_PI)*log(1d-6),kind=kind(N));
-    h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-6);
+    N = ceiling(-(3.0_real32)/((2.0_real32)*S_PI)*log(1d-16),kind=kind(N));
+    h = (3.0_real32)/N
+    gamma = -(1.0_real32/(8.0_real32*t))*log(1d-16);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real32,0.0_real32)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(sonei*uk + sone)**2
-      zpk = 2.0*gamma*donei*(sonei*uk + sone)
+      zpk = (2.0_real32)*gamma*donei*(sonei*uk + sone)
       do l=1,m
         sk(l) = sk(l) + exp(zk*t - abs(x(l))*zk**(-lambda))*zk**(-mu)*zpk
       end do
     end do quadrature
-    sk = h*sk/(2.0*S_PI*donei)
+    sk = h*sk/((2.0_real32)*S_PI*donei)
 
     w = RealPart(sk)
 
@@ -278,20 +278,20 @@ contains
 
     allocate(sk(m))
 
-    N = ceiling(-3.0/(2.0*T_PI)*log(1d-32),kind=kind(N));
-    h = 3.0/N
-    gamma = -(1.0/(8.0*t))*log(1d-32);
+    N = ceiling(-(3.0_real128)/((2.0_real128)*T_PI)*log(1d-64),kind=kind(N));
+    h = (3.0_real128)/N
+    gamma = -(1.0_real128/(8.0_real128*t))*log(1d-64);
 
-    sk = (0.0,0.0)
+    sk = (0.0_real128,0.0_real128)
     quadrature: do k=-N,N
       uk = k*h
       zk = gamma*(tonei*uk + tone)**2
-      zpk = 2.0*gamma*donei*(tonei*uk + tone)
+      zpk = (2.0_real128)*gamma*donei*(tonei*uk + tone)
       do l=1,m
         sk(l) = sk(l) + exp(zk*t - abs(x(l))*zk**(-lambda))*zk**(-mu)*zpk
       end do
     end do quadrature
-    sk = h*sk/(2.0*T_PI*donei)
+    sk = h*sk/((2.0_real128)*T_PI*donei)
 
     w = RealPart(sk)
 
