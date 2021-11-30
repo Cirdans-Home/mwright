@@ -6,7 +6,7 @@ these are the functions that make use of the ARB library
 (`arblib.org <https://arblib.org/>`_)
 for arbitrary-precision ball arithmetic.
 
-.. autocfunction:: wright.c::wright
+.. autocfunction:: wright.c::wrightseries
 
 .. toctree::
    :maxdepth: 2

@@ -1,4 +1,5 @@
-/* Test for the computation of the Wrigt Function with the Series */
+/* Test for the computation of the Wright function with high precision series
+representation. */
 // BSD 3-Clause License
 //
 // Copyright (c) 2021, Fabio Durastante, Lidia Aceto
@@ -31,41 +32,104 @@
 #include "include/wright_config.h"
 #include <stdio.h>
 
+#define BUFFER_LENGTH 50
+
 /*
 This test program contains the test for the computation of the Wright Function
 using the series representation and the intervall arithmetic as implementend in
 the ARB libray.
 */
-int main(){
+
+/**
+ * This test program contains the test for the computation of the Wright
+ * Function using the series representation and the intervall arithmetic as
+ * implementend in the ARB libray. The input has to be given from stdin as
+ * :code:`./wrighttest λ μ n prec inputfile`.
+ *
+ * :param: :math:`\lambda` with :math:`\lambda \in (-1,0)`,
+ * :param: :math:`\mu` with :math:`\mu \in \mathbb{R}`
+ * :param: :math:`n` number of terms in the series
+ * :param: prec: ARB precision parameter
+ * :param: inputfile path of the file containing the input
+ *
+ * :returns: File wrighttest.out with the computed values
+ *
+ */
+int main(int argc, char *argv[]){
 
   double x,lambda,mu;
-  arb_t arx, arlambda, armu, w;
-  char input[100];
-  slong prec = 128;
-  int n;
+  arb_t arx, arlambda, armu;
+  arb_ptr xvec,wvec;
+  slong prec;
+  int n,numberofx;
+  int info = -1;
+  char buffer[BUFFER_LENGTH];
+  FILE *inputfile, *outputfile;
 
-  arb_init(arx);
+  if( argc < 6 || argc > 6){
+    fprintf(stderr, "./wrighttest λ μ n prec inputfile\n");
+    fprintf(stderr, "\t-1 < λ ≦ 0\n");
+    fprintf(stderr, "\tμ ∈ R\n");
+    fprintf(stderr, "\tprec precision for ARB library");
+    fprintf(stderr, "\tPath to the input file formatted as:\n");
+    fprintf(stderr, "\t\t 3 ! Number of values followed by x values\n");
+    fprintf(stderr, "\t\t 0\n\t\t-1.\n\t\t-2\n");
+    return(info);
+  }
+
+  // Reading n and precision
+  n = atoi(argv[3]);
+  prec = atoi(argv[4]);
+  // Reading λ
+  lambda = atof(argv[1]);
   arb_init(arlambda);
+  arb_set_str(arlambda,argv[1],prec);
+  // Reading μ
+  mu = atof(argv[2]);
   arb_init(armu);
-  arb_init(w);
+  arb_set_str(armu,argv[2],prec);
 
-  x = -1.0;
-  lambda = -1.0/3.0;
-  mu = 2.0/3.0;
-  n = 4;
+  fprintf(stdout, "Computing Wright Function W_{%1.2f,%1.2f}(x)\n",lambda,mu);
 
-  sprintf(input,"%f",x);
-  arb_set_str(arx,input,prec);
+  fprintf(stdout, "\t Reading data from file %s...\n", argv[5]);
+  inputfile = fopen(argv[5],"r");
+  if (inputfile == NULL){
+    fprintf(stderr, "\t ERROR: File not found\n");
+    return(info);
+  }
 
-  sprintf(input,"%f",lambda);
-  arb_set_str(arlambda,input,prec);
+  fscanf(inputfile,"%d",&numberofx);
+  fprintf(stdout, "\t Number of x values is %d\n", numberofx);
 
-  sprintf(input,"%f",mu);
-  arb_set_str(armu,input,prec);
+  xvec = _arb_vec_init(numberofx);
+  for (int i = 0; i < numberofx; i++){
+    fgets(buffer, BUFFER_LENGTH, inputfile);
+    arb_set_str(xvec+i, buffer, prec);
+  }
 
-  wright(arx, arlambda, armu, prec, n, w);
+  fprintf(stdout, "\t Reading data complete, closing %s.\n", argv[5]);
+  fclose(inputfile);
 
-  fprintf(stdout, "\nW_{%f,%f}(%f) = %s\n",lambda,mu,x,arb_get_str(w,prec,0));
+  fprintf(stdout, "\t Computing Wright function values");
+  wvec = _arb_vec_init(numberofx);
+  for (int i = 0; i < numberofx; i++){
+    info = wrightseries(xvec+i, arlambda, armu, prec, n, wvec+i);
+    if( info != 0){
+      fprintf(stderr, "ERROR: Error in the %dth Wright computation\n",i);
+      return(info);
+    }
+  }
+  fprintf(stdout, "\t Computation complete.\n");
 
-  return 0;
+  fprintf(stdout, "\t Writing output to file\n");
+  outputfile = fopen("wrighttest.out", "w");
+  for (int i = 0; i < numberofx; i++)
+  {
+      arb_fprintd(outputfile, wvec + i, 16);
+      fprintf(outputfile, "\n");    // or any whitespace character
+  }
+  fclose(outputfile);
+  fprintf(stdout, "\t Writing complete\n");
+
+  return(info);
 }

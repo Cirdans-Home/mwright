@@ -52,12 +52,12 @@ void printversion(){
  * :returns info: 0 for correct run, 1 otherwise
  *
  */
-int wright(arb_t x, arb_t lambda, arb_t mu, slong prec, slong n, arb_t w){
+int wrightseries(arb_t x, arb_t lambda, arb_t mu, slong prec, slong n, arb_t w){
   int info;
   arb_t c,arbi,arbifact;
   char stringi[2*n];
 
-  info = -1;
+  info = 0;
 
   arb_poly_t truncatedseries;
   arb_poly_init(truncatedseries);

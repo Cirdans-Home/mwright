@@ -28,6 +28,11 @@ endif()
 # ---------------------------------------------------------------------------- #
 add_executable(wrighttest test/wrighttest.c)
 target_link_libraries(wrighttest PUBLIC wright)
+add_custom_command(
+       TARGET wrighttest POST_BUILD
+       COMMAND ${CMAKE_COMMAND} -E copy
+               ${CMAKE_SOURCE_DIR}/test/input.inp
+						   ${CMAKE_CURRENT_BINARY_DIR}/input.inp)
 
 # ---------------------------------------------------------------------------- #
 # Compile the docs                                                             #
