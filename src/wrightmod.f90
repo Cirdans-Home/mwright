@@ -69,7 +69,7 @@ contains
 
     real(real64) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real64) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real64) :: lambda !! First parameter of the Wright function
+    real(real64) :: lambda ! First parameter of the Wright function
     real(real64) :: mu ! Second parameter of the Wright function
     real(real64) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 
@@ -100,7 +100,7 @@ contains
 
     real(real32) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real32) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real32) :: lambda !! First parameter of the Wright function
+    real(real32) :: lambda ! First parameter of the Wright function
     real(real32) :: mu ! Second parameter of the Wright function
     real(real32) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 
@@ -131,7 +131,7 @@ contains
 
     real(real128) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real128) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real128) :: lambda !! First parameter of the Wright function
+    real(real128) :: lambda ! First parameter of the Wright function
     real(real128) :: mu ! Second parameter of the Wright function
     real(real128) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 
@@ -163,7 +163,7 @@ contains
 
     real(real64), dimension(:) :: x  ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real64) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real64) :: lambda !! First parameter of the Wright function
+    real(real64) :: lambda ! First parameter of the Wright function
     real(real64) :: mu ! Second parameter of the Wright function
     real(real64), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 
@@ -210,7 +210,7 @@ contains
 
     real(real32) :: x(:) ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real32) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real32) :: lambda !! First parameter of the Wright function
+    real(real32) :: lambda ! First parameter of the Wright function
     real(real32) :: mu ! Second parameter of the Wright function
     real(real32), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 
@@ -257,7 +257,7 @@ contains
 
     real(real128) :: x(:) ! The `x` in the argument :math:`-|x|t^\lambda`
     real(real128) :: t ! The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
-    real(real128) :: lambda !! First parameter of the Wright function
+    real(real128) :: lambda ! First parameter of the Wright function
     real(real128) :: mu ! Second parameter of the Wright function
     real(real128), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
 

@@ -10,7 +10,7 @@ counterparts with respect to the :math:`x` variable. They are all
 *private* inside the module, and are accesible from a unique interface called
 `wright`.
 
-.. f:autosrcfile:: wright.f90
+.. f:autosrcfile:: wrightmod.f90
 
 
 .. toctree::

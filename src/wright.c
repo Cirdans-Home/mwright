@@ -43,14 +43,14 @@ void printversion(){
  * library with interval arithmetic in high-precision. This version is used to
  * compare the results obtained with the inversion of the Laplace transform for
  * some of the cases for which we do not have a closed form expression.
- * :param x: The `x` in the argument :math:`-|x|t^\lambda`
- * :param t: The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
- * :param lambda: First parameter of the Wright function
- * :param prec: Precision parameter for the ARB library
- * :param n: Number of terms of the series to be used
- * :param w: Variable containing the output of the computation
- * :returns info: 0 for correct run, 1 otherwise
  *
+ * :param: x The `x` in the argument :math:`-|x|t^\lambda`
+ * :param: t: The `t` in the argument :math:`-|x|t^\lambda` ( :math:`t > 0` )
+ * :param: lambda First parameter of the Wright function
+ * :param: prec: Precision parameter for the ARB library
+ * :param: n Number of terms of the series to be used
+ * :param: w Variable containing the output of the computation
+ * :returns: info 0 for correct run, 1 otherwise
  */
 int wrightseries(arb_t x, arb_t lambda, arb_t mu, slong prec, slong n, arb_t w){
   int info;

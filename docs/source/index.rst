@@ -6,9 +6,18 @@
 Welcome to Wright's documentation!
 ==================================
 
-This small library contains implementation in C and Fortran for computing the
-Wright function of the second kind, often called Mainardi's function, on the
+This small library contains implementation in C, Fortran and MATLAB for computing
+the Wright function of the second kind, often called Mainardi's function, on the
 real line.
+
+How to obtain
+-------------
+
+The latest version of this code can be obtained from GitHub
+
+.. code-block:: none
+
+   git clone git@github.com:Cirdans-Home/mwright.git
 
 How to compile
 --------------
@@ -32,7 +41,8 @@ based on the inversion of the Laplace transform.
    If you want to build this documentation you'll need also a working version
    of Sphinx, together with the extensions :code:`'sphinx.ext.autodoc'`,
    :code:`'sphinx_c_autodoc'`, :code:`'sphinx.ext.mathjax'`,
-   :code:`'sphinxfortran.fortran_domain'`, :code:`'sphinxfortran.fortran_autodoc'`.
+   :code:`'sphinxfortran.fortran_domain'`, :code:`'sphinxfortran.fortran_autodoc'`,
+   and :code:`sphinxcontrib.matlab`.
    This step **can be omitted** from the :code:`ccmake` settings.
 
 
