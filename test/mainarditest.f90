@@ -45,28 +45,17 @@ program mainarditest
 
    h = 10.0/(real(N,real64)-1.0)
    do i=1,N
-      x(i) = -5.0 + (i-1)*h
+      x(i) = -5.0 + real((i-1),real64)*h
    end do
 
    write(output_unit,'("Test for closed forms of the Mainardi function.")')
 
-   write(output_unit,'("1) λ = -0.5 μ = -0.5 W = exp(-z^2/4)sqrt(pi)")')
-   lambda = -0.5
-   mu = 0.5
+   write(output_unit,'("With λ = -0.5 μ = -0.5 W = exp(-z^2/4)sqrt(pi)")')
+   lambda = -1.0/3.0
+   mu = 2.0/3.0
    w = wright(x, t, lambda, mu)
-   true = exp(-abs(x)**2/4.0)/sqrt(D_PI)
+   true = exp(-(abs(x)**2)/4.0)/sqrt(D_PI)
    open (unit = 99, file = "mainardi1.out")
-   do i=1,N
-      write(99,'(f20.16,",",f20.16,",",f20.16)')x(i),w(i),true(i)
-   end do
-   close(99)
-
-   write(output_unit,'("2) λ = -0.5 μ = 0.0 W = abs(z) exp(-abs(z).^2/4)./(2 sqrt(pi))")')
-   lambda = -0.5
-   mu = 0.0
-   w = wright(x, t, lambda, mu)
-   true = abs(x)*exp(-abs(x)**(2.0/4.0))/(2.0*sqrt(D_PI));
-   open (unit = 99, file = "mainardi2.out")
    do i=1,N
       write(99,'(f20.16,",",f20.16,",",f20.16)')x(i),w(i),true(i)
    end do
