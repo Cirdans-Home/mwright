@@ -34,17 +34,17 @@ module wrightmod
   implicit none
 
   ! Constants
-  real(real32), parameter ::  S_PI = 3.14159265
-  real(real64), parameter ::  D_PI = 3.141592653589793
-  real(real128), parameter :: T_PI = 3.1415926535897932384626433832795
+  real(real32)  ::  S_PI = 3.14159265_real32
+  real(real64)  ::  D_PI = 3.141592653589793_real64
+  real(real128) :: T_PI = 3.1415926535897932384626433832795_real128
 
-  real(real32), parameter :: sone = 1.0_real32
-  real(real64), parameter :: done = 1.0_real64
-  real(real128), parameter :: tone = 1.0_real128
+  real(real32)  :: sone = 1.0_real32
+  real(real64)  :: done = 1.0_real64
+  real(real128) :: tone = 1.0_real128
 
-  complex(real32), parameter :: sonei = (0.0,1.0_real32)
-  complex(real64), parameter :: donei = (0.0,1.0_real64)
-  complex(real128), parameter :: tonei = (0.0,1.0_real128)
+  complex(real32)  :: sonei = (0.0,1.0_real32)
+  complex(real64)  :: donei = (0.0,1.0_real64)
+  complex(real128) :: tonei = (0.0,1.0_real128)
 
   ! Interface
   interface wright
@@ -158,7 +158,7 @@ contains
   end function twright
 
   ! Vectorized versions
-  function dwright_vec(x,t,lambda,mu) result(w)
+  function dwright_vec(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real64), dimension(:) :: x  ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -166,15 +166,15 @@ contains
     real(real64) :: lambda ! First parameter of the Wright function
     real(real64) :: mu ! Second parameter of the Wright function
     real(real64), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N,k,l,m
+    integer :: N_,k,l,m,info
     real(real64) :: h,gamma
-    complex(real64) :: uk,zk,zpk
-    complex(real64), allocatable, dimension(:) :: sk
+    complex(real64) :: sk
+    complex(real64), allocatable, dimension(:) :: uk,zk,zpk
 
     m = size(x)
-
 
     if (.not.allocated(w)) &
       & allocate(w(m))
@@ -182,31 +182,35 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    allocate(sk(m))
+    if ( present(N) ) then
+      N_ = N
+    else
+      N_ = floor(-(3.0_real64)/((2.0_real64)*D_PI)*log(epsilon(x)),kind=kind(N));
+    end if
 
-    N = floor(-(3.0_real64)/((2.0_real64)*D_PI)*log(epsilon(x)),kind=kind(N));
-    h = (3.0_real64)/real(N,real64)
-    gamma = (D_PI*real(N,real64))/(12.0_real64*t);
-    write(output_unit,'("N = ",i2," h = ",f20.16," γ = ",f20.16)')N,h,gamma
+    allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
+    if( info.ne.0 ) &
+      & write(error_unit,'("ERROR: In allocation temporary vectors")')
 
-    sk = (0.0_real64,0.0_real64)
-    quadrature: do k=-N,N
-      uk = real(k,real64)*h
-      zk = gamma*(donei*uk + done)**2
-      zpk = (2.0_real64)*gamma*donei*(donei*uk + done)
-      do l=1,m
-        sk(l) = sk(l) + exp(zk*t)*(zk**(-mu))*exp(-abs(x(l))*zk**(-lambda))*zpk
-      end do
-    end do quadrature
-    sk = h*sk/((2.0_real64)*D_PI*donei)
+    h = (3.0_real64)/real(N_,real64)
+    gamma = (D_PI*real(N_,real64))/(12.0_real64*t);
 
-    w = RealPart(sk)
+    do k=-N_,N_
+      uk(k+N_+1) = real(k,real64)*h
+      zk(k+N_+1) = gamma*(donei*uk(k+N_+1) + done)*(donei*uk(k+N_+1) + done)
+      zpk(k+N_+1) = (2.0_real64)*gamma*donei*(donei*uk(k+N_+1) + done)
+    end do
 
-    deallocate(sk)
+    do l=1,m
+        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(l) = RealPart(h*sk/((2.0_real64)*S_PI*donei))
+    end do
+
+    deallocate(uk,zk,zpk)
 
   end function dwright_vec
 
-  function swright_vec(x,t,lambda,mu) result(w)
+  function swright_vec(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real32) :: x(:) ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -214,15 +218,15 @@ contains
     real(real32) :: lambda ! First parameter of the Wright function
     real(real32) :: mu ! Second parameter of the Wright function
     real(real32), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N,k,l,m
+    integer :: N_,k,l,m,info
     real(real32) :: h,gamma
-    complex(real32) :: uk,zk,zpk
-    complex(real32), allocatable, dimension(:) :: sk
+    complex(real32) :: sk
+    complex(real32), allocatable, dimension(:) :: uk,zk,zpk
 
     m = size(x)
-
 
     if (.not.allocated(w)) &
       & allocate(w(m))
@@ -230,30 +234,35 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    allocate(sk(m))
+    if ( present(N) ) then
+      N_ = N
+    else
+      N_ = floor(-(3.0_real32)/((2.0_real32)*D_PI)*log(epsilon(x)),kind=kind(N));
+    end if
 
-    N = ceiling(-(3.0_real32)/((2.0_real32)*S_PI)*log(epsilon(x)),kind=kind(N));
-    h = (3.0_real32)/real(N,real32)
-    gamma = (D_PI*real(N,real32))/(12.0_real32*t);
+    allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
+    if( info.ne.0 ) &
+      & write(error_unit,'("ERROR: In allocation temporary vectors")')
 
-    sk = (0.0_real32,0.0_real32)
-    quadrature: do k=-N,N
-      uk = k*h
-      zk = gamma*(sonei*uk + sone)**2
-      zpk = (2.0_real32)*gamma*donei*(sonei*uk + sone)
-      do l=1,m
-        sk(l) = sk(l) + exp(zk*t)*(zk**(-mu))*exp(-abs(x(l))*zk**(-lambda))*zpk
-      end do
-    end do quadrature
-    sk = h*sk/((2.0_real32)*S_PI*donei)
+    h = (3.0_real32)/real(N_,real32)
+    gamma = (D_PI*real(N_,real32))/(12.0_real32*t);
 
-    w = RealPart(sk)
+    do k=-N_,N_
+      uk(k+N_+1) = real(k,real32)*h
+      zk(k+N_+1) = gamma*(donei*uk(k+N_+1) + done)*(donei*uk(k+N_+1) + done)
+      zpk(k+N_+1) = (2.0_real32)*gamma*donei*(donei*uk(k+N_+1) + done)
+    end do
 
-    deallocate(sk)
+    do l=1,m
+        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(l) = RealPart(h*sk/((2.0_real32)*S_PI*donei))
+    end do
+
+    deallocate(uk,zk,zpk)
 
   end function swright_vec
 
-  function twright_vec(x,t,lambda,mu) result(w)
+  function twright_vec(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real128) :: x(:) ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -261,15 +270,15 @@ contains
     real(real128) :: lambda ! First parameter of the Wright function
     real(real128) :: mu ! Second parameter of the Wright function
     real(real128), dimension(:), allocatable :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N,k,l,m
+    integer :: N_,k,l,m,info
     real(real128) :: h,gamma
-    complex(real128) :: uk,zk,zpk
-    complex(real128), allocatable, dimension(:) :: sk
+    complex(real128) :: sk
+    complex(real128), allocatable, dimension(:) :: uk,zk,zpk
 
     m = size(x)
-
 
     if (.not.allocated(w)) &
       & allocate(w(m))
@@ -277,26 +286,31 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    allocate(sk(m))
+    if ( present(N) ) then
+      N_ = N
+    else
+      N_ = floor(-(3.0_real128)/((2.0_real128)*D_PI)*log(epsilon(x)),kind=kind(N));
+    end if
 
-    N = ceiling(-(3.0_real128)/((2.0_real128)*T_PI)*log(epsilon(x)),kind=kind(N));
-    h = (3.0_real128)/real(N,real128)
-    gamma = (D_PI*N)/(12.0_real128*t);
+    allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
+    if( info.ne.0 ) &
+      & write(error_unit,'("ERROR: In allocation temporary vectors")')
 
-    sk = (0.0_real128,0.0_real128)
-    quadrature: do k=-N,N
-      uk = real(k,real128)*h
-      zk = gamma*(tonei*uk + tone)**2
-      zpk = (2.0_real128)*gamma*donei*(tonei*uk + tone)
-      do l=1,m
-        sk(l) = sk(l) + exp(zk*t)*(zk**(-mu))*exp(-abs(x(l))*zk**(-lambda))*zpk
-      end do
-    end do quadrature
-    sk = h*sk/((2.0_real128)*T_PI*donei)
+    h = (3.0_real128)/real(N_,real128)
+    gamma = (D_PI*real(N_,real128))/(12.0_real128*t);
 
-    w = RealPart(sk)
+    do k=-N_,N_
+      uk(k+N_+1) = real(k,real128)*h
+      zk(k+N_+1) = gamma*(donei*uk(k+N_+1) + done)*(donei*uk(k+N_+1) + done)
+      zpk(k+N_+1) = (2.0_real128)*gamma*donei*(donei*uk(k+N_+1) + done)
+    end do
 
-    deallocate(sk)
+    do l=1,m
+        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(l) = RealPart(h*sk/((2.0_real128)*S_PI*donei))
+    end do
+
+    deallocate(uk,zk,zpk)
 
   end function twright_vec
 

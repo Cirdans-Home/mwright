@@ -41,7 +41,7 @@ z  = @(u) gamma*(1i*u + 1).^2;
 zp = @(u) 2*1i*gamma*(1i*u + 1);
 %% Determine the nodes
 h = 3/N;
-uk = -N:h:N;
+uk = (-N:N)*h;
 %% Apply the quadrature rule
 w = zeros(size(x));
 zuk = z(uk);
@@ -51,6 +51,8 @@ end
 
 %% Check that everything is real
 w = real(w);
+
+
 
 end
 

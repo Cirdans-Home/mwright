@@ -34,8 +34,8 @@ program mainarditest
 
    ! Parameters
    integer, parameter      :: N = 200
-   real(real64), parameter :: D_PI = 3.1415926535897932384626433832795
-   real(real64), parameter :: t = 1.0;
+   real(real64) :: D_PI = 3.1415926535897932384626433832795_real64
+   real(real64) :: t = 1.0_real64
    ! Values
    real(real64) :: x(N), true(N)
    real(real64), allocatable :: w(:)
@@ -43,22 +43,24 @@ program mainarditest
    ! Auxiliary variables
    integer i
 
-   h = 10.0/(real(N,real64)-1.0)
+   h = 10.0_real64/(real(N,real64)-1.0)
    do i=1,N
-      x(i) = -5.0 + real((i-1),real64)*h
+      x(i) = -5.0_real64 + real((i-1),real64)*h
    end do
 
    write(output_unit,'("Test for closed forms of the Mainardi function.")')
 
    write(output_unit,'("With λ = -0.5 μ = -0.5 W = exp(-z^2/4)sqrt(pi)")')
-   lambda = -1.0/3.0
-   mu = 2.0/3.0
+   lambda = -0.5_real64
+   mu = 0.5_real64
    w = wright(x, t, lambda, mu)
-   true = exp(-(abs(x)**2)/4.0)/sqrt(D_PI)
+   true = exp(-(abs(x)**2)/4.0_real64)/sqrt(D_PI)
    open (unit = 99, file = "mainardi1.out")
    do i=1,N
       write(99,'(f20.16,",",f20.16,",",f20.16)')x(i),w(i),true(i)
    end do
    close(99)
+
+   deallocate(w)
 
 end program
