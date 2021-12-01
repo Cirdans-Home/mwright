@@ -30,7 +30,7 @@
 module wrightmod
   ! Module containg the implementation of the routines for computing the Wright
   ! function on the real line.
-  use iso_fortran_env, only : real32, real64, real128, error_unit, output_unit
+  use iso_fortran_env, only : real32, real64, real128, error_unit
   implicit none
 
   ! Constants
@@ -203,7 +203,7 @@ contains
 
     do l=1,m
         sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
-        w(l) = RealPart(h*sk/((2.0_real64)*S_PI*donei))
+        w(l) = RealPart( h*sk/((2.0_real64)*D_PI*donei))
     end do
 
     deallocate(uk,zk,zpk)
@@ -237,7 +237,7 @@ contains
     if ( present(N) ) then
       N_ = N
     else
-      N_ = floor(-(3.0_real32)/((2.0_real32)*D_PI)*log(epsilon(x)),kind=kind(N));
+      N_ = floor(-(3.0_real32)/((2.0_real32)*S_PI)*log(epsilon(x)),kind=kind(N));
     end if
 
     allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
@@ -289,7 +289,7 @@ contains
     if ( present(N) ) then
       N_ = N
     else
-      N_ = floor(-(3.0_real128)/((2.0_real128)*D_PI)*log(epsilon(x)),kind=kind(N));
+      N_ = floor(-(3.0_real128)/((2.0_real128)*T_PI)*log(epsilon(x)),kind=kind(N));
     end if
 
     allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
@@ -307,7 +307,7 @@ contains
 
     do l=1,m
         sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
-        w(l) = RealPart(h*sk/((2.0_real128)*S_PI*donei))
+        w(l) = RealPart(h*sk/((2.0_real128)*T_PI*donei))
     end do
 
     deallocate(uk,zk,zpk)

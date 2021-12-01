@@ -12,8 +12,4 @@ m1 = csvread('mainardi1.out');
 figure(1)
 plot(m1(:,1),abs(m1(:,2)-m1(:,3))./abs(m1(:,3)),'r--');
 
-figure(2)
-w = mwright(m1(:,1),1,-0.5,0.5);
-plot(m1(:,1),abs(m1(:,2)-w)./abs(w),'r--');
-
 
