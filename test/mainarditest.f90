@@ -50,7 +50,7 @@ program mainarditest
 
    write(output_unit,'("Test for closed forms of the Mainardi function.")')
 
-   write(output_unit,'("With λ = -0.5 μ = -0.5 W = exp(-z^2/4)sqrt(pi)")')
+   write(output_unit,'("With λ = -0.5 μ = 0.5 W = exp(-z^2/4)sqrt(pi)")')
    lambda = -0.5_real64
    mu = 0.5_real64
    w = wright(x, t, lambda, mu)
