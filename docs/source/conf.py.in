@@ -10,8 +10,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
+import os
+import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
 
@@ -33,10 +33,11 @@ release = '1.0'
 extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.autodoc',
+    'sphinxcontrib.matlab',
     'sphinx_c_autodoc',
     'sphinx.ext.mathjax',
     'sphinxfortran.fortran_domain',
-    'sphinxfortran.fortran_autodoc'
+    'sphinxfortran.fortran_autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -60,6 +61,9 @@ html_theme = 'cloud'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-c_autodoc_roots = ['../../src','../../test']
+c_autodoc_roots = ['../../src','../../test','../../matlab']
 fortran_src = ['@CMAKE_SOURCE_DIR@/src/']
 fortran_ext = ['f90','f95']
+# matlab_src_dir = ['@CMAKE_SOURCE_DIR@/matlab']
+matlab_src_dir = os.path.abspath('../..')
+print("matlab_src_dir: ", matlab_src_dir)
