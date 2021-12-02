@@ -62,7 +62,7 @@ html_theme = 'cloud'
 html_static_path = ['_static']
 
 c_autodoc_roots = ['../../src','../../test','../../matlab']
-fortran_src = ['@CMAKE_SOURCE_DIR@/src/']
+fortran_src = ['@CMAKE_SOURCE_DIR@/src/','@CMAKE_SOURCE_DIR@/test/']
 fortran_ext = ['f90','f95']
 # matlab_src_dir = ['@CMAKE_SOURCE_DIR@/matlab']
 matlab_src_dir = os.path.abspath('../..')

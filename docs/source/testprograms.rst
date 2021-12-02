@@ -15,6 +15,11 @@ C test
    :maxdepth: 2
    :caption: Contents:
 
+Fortran test
+------------
+
+.. f:autoprogram:: mainarditest
+
 MATLAB tests
 ------------
 
