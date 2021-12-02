@@ -64,7 +64,7 @@ module wrightmod
 
 contains
 
-  function dwright(x,t,lambda,mu) result(w)
+  function dwright(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real64) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -72,18 +72,23 @@ contains
     real(real64) :: lambda ! First parameter of the Wright function
     real(real64) :: mu ! Second parameter of the Wright function
     real(real64) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional, number of quadrature points
 
     ! Internal variables
-    integer :: N,k
+    integer :: N_,k
     real(real64) :: h,gamma
     complex(real64) :: uk,zk,zpk,sk
 
-    N = floor(-((3.0_real64)/((2.0_real64)*D_PI))*log(epsilon(x)),kind=kind(N));
-    h = 3.0_real64/real(N,real64)
-    gamma = (D_PI*real(N,real64))/(12.0_real64*t);
+    if (present(N)) then
+      N_ = N
+    else
+      N_ = floor(-((3.0_real64)/((2.0_real64)*D_PI))*log(epsilon(x)),kind=kind(N));
+    end if
+    h = 3.0_real64/real(N_,real64)
+    gamma = (D_PI*real(N_,real64))/(12.0_real64*t);
 
     sk = (0.0_real64,0.0_real64)
-    quadrature: do k=-N,N
+    quadrature: do k=-N_,N_
       uk = real(k,real64)*h
       zk = gamma*(donei*uk + done)**2
       zpk = (2.0_real64)*gamma*donei*(donei*uk + done)
@@ -95,7 +100,7 @@ contains
 
   end function dwright
 
-  function swright(x,t,lambda,mu) result(w)
+  function swright(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real32) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -103,18 +108,23 @@ contains
     real(real32) :: lambda ! First parameter of the Wright function
     real(real32) :: mu ! Second parameter of the Wright function
     real(real32) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional, number of quadrature points
 
     ! Internal variables
-    integer :: N,k
+    integer :: N_,k
     real(real32) :: h,gamma
     complex(real32) :: uk,zk,zpk,sk
 
-    N = ceiling(-(3.0_real32)/((2.0_real32)*S_PI)*log(epsilon(x)),kind=kind(N));
-    h = (3.0_real32)/real(N,real32)
-    gamma = (D_PI*real(N,real32))/(12.0_real32*t);
+    if (present(N)) then
+      N_ = N
+    else
+      N_ = floor(-((3.0_real32)/((2.0_real32)*S_PI))*log(epsilon(x)),kind=kind(N));
+    end if
+    h = (3.0_real32)/real(N_,real32)
+    gamma = (D_PI*real(N_,real32))/(12.0_real32*t);
 
     sk = (0.0_real32,0.0_real32)
-    quadrature: do k=-N,N
+    quadrature: do k=-N_,N_
       uk = real(k,real32)*h
       zk = gamma*(sonei*uk + done)**2
       zpk = (2.0_real32)*gamma*sonei*(sonei*uk + sone)
@@ -126,7 +136,7 @@ contains
 
   end function swright
 
-  function twright(x,t,lambda,mu) result(w)
+  function twright(x,t,lambda,mu,N) result(w)
     implicit none
 
     real(real128) :: x ! The `x` in the argument :math:`-|x|t^\lambda`
@@ -134,18 +144,23 @@ contains
     real(real128) :: lambda ! First parameter of the Wright function
     real(real128) :: mu ! Second parameter of the Wright function
     real(real128) :: w ! :math:`t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})`
+    integer, optional :: N ! Optional, number of quadrature points
 
     ! Internal variables
-    integer :: N,k
+    integer :: N_,k
     real(real128) :: h,gamma
     complex(real128) :: uk,zk,zpk,sk
 
-    N = ceiling(-(3.0_real128)/((2.0_real128)*T_PI)*log(epsilon(x)),kind=kind(N));
-    h = (3.0_real128)/real(N,real128)
-    gamma = (D_PI*N)/(12.0_real128*t);
+    if (present(N)) then
+      N_ = N
+    else
+      N_ = floor(-((3.0_real128)/((2.0_real128)*D_PI))*log(epsilon(x)),kind=kind(N));
+    end if
+    h = (3.0_real128)/real(N_,real128)
+    gamma = (D_PI*N_)/(12.0_real128*t);
 
     sk = (0.0_real128,0.0_real128)
-    quadrature: do k=-N,N
+    quadrature: do k=-N_,N_
       uk = real(k,real128)*h
       zk = gamma*(tonei*uk + done)**2
       zpk = (2.0_real128)*gamma*tonei*(tonei*uk + tone)
