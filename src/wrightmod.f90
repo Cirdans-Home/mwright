@@ -312,7 +312,7 @@ contains
       & write(error_unit,'("ERROR: In allocation temporary vectors")')
 
     h = (3.0_real128)/real(N_,real128)
-    gamma = (D_PI*real(N_,real128))/(12.0_real128*t);
+    gamma = (T_PI*real(N_,real128))/(12.0_real128*t);
 
     do k=-N_,N_
       uk(k+N_+1) = real(k,real128)*h
