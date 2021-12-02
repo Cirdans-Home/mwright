@@ -34,17 +34,17 @@ module wrightmod
   implicit none
 
   ! Constants
-  real(real32)  ::  S_PI = 3.14159265_real32
-  real(real64)  ::  D_PI = 3.141592653589793_real64
-  real(real128) :: T_PI = 3.1415926535897932384626433832795_real128
+  real(real32),  parameter ::  S_PI = 3.14159265_real32
+  real(real64),  parameter ::  D_PI = 3.141592653589793_real64
+  real(real128), parameter ::  T_PI = 3.1415926535897932384626433832795_real128
 
-  real(real32)  :: sone = 1.0_real32
-  real(real64)  :: done = 1.0_real64
-  real(real128) :: tone = 1.0_real128
+  real(real32),  parameter :: sone = 1.0_real32
+  real(real64),  parameter :: done = 1.0_real64
+  real(real128), parameter :: tone = 1.0_real128
 
-  complex(real32)  :: sonei = (0.0,1.0_real32)
-  complex(real64)  :: donei = (0.0,1.0_real64)
-  complex(real128) :: tonei = (0.0,1.0_real128)
+  complex(real32),  parameter :: sonei = (0.0,1.0_real32)
+  complex(real64),  parameter :: donei = (0.0,1.0_real64)
+  complex(real128), parameter :: tonei = (0.0,1.0_real128)
 
   ! Interface
   interface wright
