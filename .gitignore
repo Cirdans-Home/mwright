@@ -1,4 +1,6 @@
 build
 docs/source/conf.py
+msrc/*.inp
 *.out
 *.tikz
+*.eps

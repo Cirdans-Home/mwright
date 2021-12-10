@@ -8,6 +8,8 @@ for arbitrary-precision ball arithmetic.
 
 .. autocfunction:: wright.c::wrightseries
 
+.. autocfunction:: wright.c::zwrightseries
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

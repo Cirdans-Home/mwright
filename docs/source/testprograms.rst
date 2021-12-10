@@ -11,6 +11,10 @@ C test
 
 .. autocfunction:: wrighttest.c::main
 
+.. autocmodule:: zwrighttest.c
+
+.. autocfunction:: zwrighttest.c::main
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -26,3 +30,7 @@ MATLAB tests
 .. mat:automodule:: msrc
 
 .. mat:autoscript:: convergence
+
+.. mat:autoscript:: convergencecfunction
+
+.. mat:autoscript:: convergencecfunctioncomplex

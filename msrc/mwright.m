@@ -50,8 +50,9 @@ for k=1:length(w)
 end
 
 %% Check that everything is real
-w = real(w);
-
+if isreal(mu)
+    w = real(w);
+end
 
 
 end

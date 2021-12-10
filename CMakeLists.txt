@@ -34,6 +34,9 @@ add_custom_command(
                ${CMAKE_SOURCE_DIR}/test/input.inp
 						   ${CMAKE_CURRENT_BINARY_DIR}/input.inp)
 
+add_executable(zwrighttest test/zwrighttest.c)
+target_link_libraries(zwrighttest PUBLIC wright)
+
 add_executable(mainarditest test/mainarditest.f90 src/wrightmod.f90)
 target_link_libraries(wrighttest PUBLIC wright)
 
