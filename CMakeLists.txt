@@ -40,6 +40,9 @@ target_link_libraries(zwrighttest PUBLIC wright)
 add_executable(mainarditest test/mainarditest.f90 src/wrightmod.f90)
 target_link_libraries(wrighttest PUBLIC wright)
 
+add_executable(quadtest test/quadtest.f90 src/wrightmod.f90)
+target_link_libraries(wrighttest PUBLIC wright)
+
 # ---------------------------------------------------------------------------- #
 # Compile the docs                                                             #
 # ---------------------------------------------------------------------------- #

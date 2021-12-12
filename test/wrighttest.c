@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
   double x,lambda,mu;
   arb_t arx, arlambda, armu;
   arb_ptr xvec,wvec;
-  slong prec;
+  slong prec, printprec;
   int n,numberofx;
   int info = -1;
   char buffer[BUFFER_LENGTH];
@@ -80,6 +80,11 @@ int main(int argc, char *argv[]){
   // Reading n and precision
   n = atoi(argv[3]);
   prec = atoi(argv[4]);
+  if (prec <= 128) {
+    printprec = 16;
+  } else {
+    printprec = 64;
+  }
   // Reading λ
   lambda = atof(argv[1]);
   arb_init(arlambda);
@@ -102,9 +107,9 @@ int main(int argc, char *argv[]){
   fprintf(stdout, "\t Number of x values is %d\n", numberofx);
 
   xvec = _arb_vec_init(numberofx);
-  fgets(buffer, BUFFER_LENGTH, inputfile);
+  info = fgets(buffer, BUFFER_LENGTH, inputfile);
   for (int i = 0; i < numberofx; i++){
-    fgets(buffer, BUFFER_LENGTH, inputfile);
+    info = fgets(buffer, BUFFER_LENGTH, inputfile);
     arb_set_str(xvec+i, buffer, prec);
   }
 
@@ -126,7 +131,7 @@ int main(int argc, char *argv[]){
   outputfile = fopen("wrighttest.out", "w");
   for (int i = 0; i < numberofx; i++)
   {
-      arb_fprintd(outputfile, wvec + i, 18);
+      arb_fprintd(outputfile, wvec + i, printprec );
       fprintf(outputfile, "\n");    // or any whitespace character
   }
   fclose(outputfile);
