@@ -24,6 +24,8 @@ Fortran test
 
 .. f:autoprogram:: mainarditest
 
+.. f:autoprogram:: quadtest
+
 MATLAB tests
 ------------
 

@@ -31,9 +31,18 @@ program quadtest
   ! This test program checks the approximation in quadruple precision for values
   ! that do not have a closed form expression.
   ! Usage is:
-  ! ./quadtest N λ μ
+  !
+  !- ``./quadtest N λ μ``
+  !
   ! All three parameters are optional. The first one sets the number of
   ! quadrature points, λ μ are the parameters of the Wright function.
+  ! The test can be called as:
+  !
+  !- ``./quadtest N``
+  !- ``./quadtest N λ μ``
+  !- ``./quadtest λ μ``
+  !- ``./quadtest``
+  !
   use iso_fortran_env, only : real32, real64, real128, error_unit, output_unit
   use wrightmod
   implicit none
