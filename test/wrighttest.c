@@ -102,6 +102,7 @@ int main(int argc, char *argv[]){
   fprintf(stdout, "\t Number of x values is %d\n", numberofx);
 
   xvec = _arb_vec_init(numberofx);
+  fgets(buffer, BUFFER_LENGTH, inputfile);
   for (int i = 0; i < numberofx; i++){
     fgets(buffer, BUFFER_LENGTH, inputfile);
     arb_set_str(xvec+i, buffer, prec);
@@ -125,7 +126,7 @@ int main(int argc, char *argv[]){
   outputfile = fopen("wrighttest.out", "w");
   for (int i = 0; i < numberofx; i++)
   {
-      arb_fprintd(outputfile, wvec + i, 16);
+      arb_fprintd(outputfile, wvec + i, 18);
       fprintf(outputfile, "\n");    // or any whitespace character
   }
   fclose(outputfile);

@@ -6,16 +6,16 @@
 clear; clc; close all;
 
 %% Parameters of the function
-lambda = -0.7; 
-mu = -0.7;
+lambda = -0.5; 
+mu = 0.25;
 n = 1000;
-prec = 128;
+prec = 256;
 
 %% Set of points for the evaluation
 m = 100;
 x = linspace(-5,0,m).';
 fid = fopen('input.inp','w+');
-fprintf(fid,"%d",m);
+fprintf(fid,"%d\n",m);
 for i=1:m
    fprintf(fid,"%1.16f\n",x(i));
 end
