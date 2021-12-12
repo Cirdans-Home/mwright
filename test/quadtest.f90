@@ -69,7 +69,6 @@ program quadtest
     allocate(args(num_args))
     do ix = 1, num_args
       call get_command_argument(ix,args(ix))
-      write(output_unit,'(A)')args(ix)
     end do
   end if
 
