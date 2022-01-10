@@ -35,7 +35,7 @@ program mainarditest
    implicit none
 
    ! Parameters
-   integer, parameter      :: N = 100
+   integer, parameter      :: N = 25
    real(real64)  :: D_PI = 3.141592653589793_real64
    real(real128) :: T_PI = 3.1415926535897932384626433832795_real128
 
@@ -43,11 +43,17 @@ program mainarditest
    ! Test in double precision
    call mainarditest1()
 
-   ! Test in quadruple precision
+   ! Test in quadruple precision for λ = -0.5 μ = 0.5
    call mainarditest2(17)
    call mainarditest2(23)
    call mainarditest2(30)
    call mainarditest2(37)
+
+   ! Test in quadruple precision for λ = 0 μ = 0
+   call mainarditest3(17)
+   call mainarditest3(23)
+   call mainarditest3(30)
+   call mainarditest3(37)
 
 
 contains
@@ -86,7 +92,7 @@ contains
 
    subroutine mainarditest2(qnodes)
       ! This subroutine implements the numerical test of accuracy for the
-      ! routine in double precision with respect to a known function.
+      ! routine in triple precision with respect to a known function.
       integer, optional :: qnodes
 
       ! Values
@@ -121,7 +127,7 @@ contains
       else
          write(file_id,'("37")')
       end if
-      file_name = "mainardi-quadruple-" // trim(file_id) // ".out"
+      file_name = "mainardi-m12-quadruple-" // trim(file_id) // ".out"
 
 
       open (unit = 99, file = trim(file_name))
@@ -133,5 +139,55 @@ contains
       deallocate(w)
 
    end subroutine mainarditest2
+
+   subroutine mainarditest3(qnodes)
+      ! This subroutine implements the numerical test of accuracy for the
+      ! routine in triple precision with respect to a known function.
+      integer, optional :: qnodes
+
+      ! Values
+      real(real128) :: x(N), true(N)
+      real(real128), allocatable :: w(:)
+      real(real128) lambda, mu, h
+      real(real128) :: t = 1.0_real128
+      ! Auxiliary variables
+      integer i
+      character(len=10) :: file_id
+      character(len=50) :: file_name
+
+      h = 10.0_real128/(real(N,real128)-1.0)
+      do i=1,N
+         x(i) = -5.0_real128 + real((i-1),real64)*h
+      end do
+
+      write(output_unit,'("(real128) With λ = 0 μ = 0 W = exp(-|z|)")')
+      lambda = 0.0_real128
+      mu = 1.0_real128
+      w = wright(x, t, lambda, mu, qnodes)
+      true = exp(-abs(x))
+
+      open (unit = 99, file = "mainardi3.out")
+      do i=1,N
+         write(99,'(f20.16,",",f40.36,",",f40.36)')x(i),w(i),true(i)
+      end do
+      close(99)
+
+      if ( present(qnodes) ) then
+         write(file_id,'(i2)')qnodes
+      else
+         write(file_id,'("37")')
+      end if
+      file_name = "mainardi-m0-quadruple-" // trim(file_id) // ".out"
+
+
+      open (unit = 99, file = trim(file_name))
+      do i=1,N
+         write(99,'(f20.16,",",f40.36)')x(i),abs(w(i)-true(i))/true(i)
+      end do
+      close(99)
+
+      deallocate(w)
+
+   end subroutine mainarditest3
 
 end program
