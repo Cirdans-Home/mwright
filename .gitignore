@@ -4,3 +4,4 @@ msrc/*.inp
 *.out
 *.tikz
 *.eps
+*.fig
