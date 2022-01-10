@@ -32,7 +32,7 @@ representation. */
 #include "include/wright_config.h"
 #include <stdio.h>
 
-#define BUFFER_LENGTH 50
+#define BUFFER_LENGTH 100
 
 /*
 This test program contains the test for the computation of the Wright Function
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
   if (prec <= 128) {
     printprec = 16;
   } else {
-    printprec = 64;
+    printprec = 80;
   }
   // Reading λ
   lambda = atof(argv[1]);
@@ -107,9 +107,9 @@ int main(int argc, char *argv[]){
   fprintf(stdout, "\t Number of x values is %d\n", numberofx);
 
   xvec = _arb_vec_init(numberofx);
-  info = fgets(buffer, BUFFER_LENGTH, inputfile);
+  fgets(buffer, BUFFER_LENGTH, inputfile);
   for (int i = 0; i < numberofx; i++){
-    info = fgets(buffer, BUFFER_LENGTH, inputfile);
+    fgets(buffer, BUFFER_LENGTH, inputfile);
     arb_set_str(xvec+i, buffer, prec);
   }
 

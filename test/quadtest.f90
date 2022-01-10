@@ -138,7 +138,7 @@ program quadtest
   write(output_unit,'("Write output: ",A)')trim(outfilename)
   open (unit = 99, file = trim(outfilename))
   do i=1,N
-    write(99,'(F20.16,",",F40.39,","F40.39,",",F40.39)')&
+    write(99,'(F20.16,",",F40.39,","F50.39,",",F50.39)')&
       & x(i),w(i),warb(i),abs(w(i)-warb(i))
   end do
   close(99)

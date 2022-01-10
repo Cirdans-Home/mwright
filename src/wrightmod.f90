@@ -31,6 +31,7 @@ module wrightmod
   ! Module containg the implementation of the routines for computing the Wright
   ! function on the real line.
   use iso_fortran_env, only : real32, real64, real128, error_unit
+  use brentmod, only: fminbnd
   implicit none
 
   ! Constants
@@ -76,16 +77,28 @@ contains
 
     ! Internal variables
     integer :: N_,k
-    real(real64) :: h,gamma
+    real(real64) :: h,gamma,xi,c,l,ltol
     complex(real64) :: uk,zk,zpk,sk
 
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-15_real64)
     if (present(N)) then
       N_ = N
+      h = (4.0_real64*l)/(D_PI*real(N_*N_,real64))
+      gamma = (D_PI*D_PI*real(N_*N_,real64))/(16.0_real64*t*l);
     else
-      N_ = floor(-((3.0_real64)/((2.0_real64)*D_PI))*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real64) then
+        N_ = floor((sqrt(2.0_real64*l*ltol))/D_PI,kind=kind(N))
+        h = (4.0_real64*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(16.0_real64*t*l)
+      else
+        N_ = fminbnd(0.1_real64, 0.99_real64, 0.5_real64, 200.0_real64, &
+          & epsilon(xi), epsilon(xi), 1.0D-4, fobjective, c)
+        xi = 2.0_real64/(done + ((2.0_real64-mu)/ltol)*log(done-c))
+        h = ((2.0_real64+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(((2.0_real64+xi*c)**2)*t*l)
+      end if
     end if
-    h = 3.0_real64/real(N_,real64)
-    gamma = (D_PI*real(N_,real64))/(12.0_real64*t);
 
     sk = (0.0_real64,0.0_real64)
     quadrature: do k=-N_,N_
@@ -97,6 +110,21 @@ contains
     sk = h*sk/((2.0_real64)*D_PI*donei)
 
     w = RealPart(sk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real64
+      implicit none
+
+      real(real64) :: xarg
+      real(real64) :: f
+
+      f = (sqrt(l*ltol)/D_PI)* &
+            & sqrt( done + (done/xarg)*(done + ((2.0_real64 - mu)/ltol) &
+            & *log(done-xarg)))
+
+    end function fobjective
 
   end function dwright
 
@@ -112,16 +140,29 @@ contains
 
     ! Internal variables
     integer :: N_,k
-    real(real32) :: h,gamma
+    real(real32) :: h,gamma,xi,c,l,ltol
     complex(real32) :: uk,zk,zpk,sk
 
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-6_real32)
     if (present(N)) then
       N_ = N
+      h = (4.0_real32*l)/(S_PI*real(N_*N_,real32))
+      gamma = (S_PI*S_PI*real(N_*N_,real32))/(16.0_real32*t*l);
     else
-      N_ = floor(-((3.0_real32)/((2.0_real32)*S_PI))*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real32) then
+        N_ = floor((sqrt(2.0_real32*l*ltol))/S_PI,kind=kind(N))
+        h = (4.0_real32*l)/(S_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(16.0_real32*t*l)
+      else
+        N_ = fminbnd(0.1_real32, 0.99_real32, 0.5_real32, 200.0_real32, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective, c)
+        xi = 2.0_real32/(sone + ((2.0_real32-mu)/ltol)*log(sone-c))
+        h = ((2.0_real32+xi*c)*l)/(S_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(((2.0_real32+xi*c)**2)*t*l)
+      end if
+
     end if
-    h = (3.0_real32)/real(N_,real32)
-    gamma = (D_PI*real(N_,real32))/(12.0_real32*t);
 
     sk = (0.0_real32,0.0_real32)
     quadrature: do k=-N_,N_
@@ -133,6 +174,21 @@ contains
     sk = h*sk/((2.0_real32)*S_PI*donei)
 
     w = RealPart(sk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real32
+      implicit none
+
+      real(real32) :: xarg
+      real(real32) :: f
+
+      f = (sqrt(l*ltol)/S_PI)* &
+            & sqrt( sone + (sone/xarg)*(sone + ((2.0_real32 - mu)/ltol) &
+            & *log(sone-xarg)))
+
+    end function fobjective
 
   end function swright
 
@@ -148,16 +204,29 @@ contains
 
     ! Internal variables
     integer :: N_,k
-    real(real128) :: h,gamma
+    real(real128) :: h,gamma,xi,c,l,ltol
     complex(real128) :: uk,zk,zpk,sk
 
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-30_real128)
     if (present(N)) then
       N_ = N
+      h = (4.0_real128*l)/(S_PI*real(N_*N_,real128))
+      gamma = (T_PI*T_PI*real(N_*N_,real128))/(16.0_real128*t*l);
     else
-      N_ = floor(-((3.0_real128)/((2.0_real128)*D_PI))*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real128) then
+        N_ = floor((sqrt(2.0_real128*l*ltol))/T_PI,kind=kind(N))
+        h = (4.0_real32*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(16.0_real128*t*l)
+      else
+        N_ = fminbnd(0.1_real128, 0.99_real128, 0.5_real128, 200.0_real128, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective, c)
+        xi = 2.0_real128/(tone + ((2.0_real128-mu)/ltol)*log(tone-c))
+        h = ((2.0_real128+xi*c)*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(((2.0_real128+xi*c)**2)*t*l)
+      end if
+
     end if
-    h = (3.0_real128)/real(N_,real128)
-    gamma = (D_PI*N_)/(12.0_real128*t);
 
     sk = (0.0_real128,0.0_real128)
     quadrature: do k=-N_,N_
@@ -169,6 +238,21 @@ contains
     sk = h*sk/((2.0_real128)*T_PI*tonei)
 
     w = RealPart(sk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real128
+      implicit none
+
+      real(real128) :: xarg
+      real(real128) :: f
+
+      f = (sqrt(l*ltol)/T_PI)* &
+            & sqrt( tone + (tone/xarg)*(tone + ((2.0_real128 - mu)/ltol) &
+            & *log(tone-xarg)))
+
+    end function fobjective
 
   end function twright
 
@@ -184,8 +268,8 @@ contains
     integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N_,k,l,m,info
-    real(real64) :: h,gamma
+    integer :: N_,k,ll,m,info
+    real(real64) :: h,gamma,xi,c,l,ltol
     complex(real64) :: sk
     complex(real64), allocatable, dimension(:) :: uk,zk,zpk
 
@@ -197,18 +281,30 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    if ( present(N) ) then
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-15_real64)
+    if (present(N)) then
       N_ = N
+      h = (4.0_real64*l)/(D_PI*real(N_*N_,real64))
+      gamma = (D_PI*D_PI*real(N_*N_,real64))/(16.0_real64*t*l);
     else
-      N_ = floor(-(3.0_real64)/((2.0_real64)*D_PI)*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real64) then
+        N_ = floor((sqrt(2.0_real64*l*ltol))/D_PI,kind=kind(N))
+        h = (4.0_real64*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(16.0_real64*t*l)
+      else
+        N_ = fminbnd(0.1_real64, 0.99_real64, 0.5_real64, 200.0_real64, &
+          & epsilon(xi), epsilon(xi), 1.0D-4, fobjective, c)
+        xi = 2.0_real64/(done + ((2.0_real64-mu)/ltol)*log(done-c))
+        h = ((2.0_real64+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(((2.0_real64+xi*c)**2)*t*l)
+      end if
+
     end if
 
     allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
     if( info.ne.0 ) &
       & write(error_unit,'("ERROR: In allocation temporary vectors")')
-
-    h = (3.0_real64)/real(N_,real64)
-    gamma = (D_PI*real(N_,real64))/(12.0_real64*t);
 
     do k=-N_,N_
       uk(k+N_+1) = real(k,real64)*h
@@ -216,12 +312,27 @@ contains
       zpk(k+N_+1) = (2.0_real64)*gamma*donei*(donei*uk(k+N_+1) + done)
     end do
 
-    do l=1,m
-        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
-        w(l) = RealPart( h*sk/((2.0_real64)*D_PI*donei))
+    do ll=1,m
+        sk = sum(exp(zk*t - abs(x(ll))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(ll) = RealPart( h*sk/((2.0_real64)*D_PI*donei))
     end do
 
     deallocate(uk,zk,zpk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real64
+      implicit none
+
+      real(real64) :: xarg
+      real(real64) :: f
+
+      f = (sqrt(l*ltol)/D_PI)* &
+            & sqrt( done + (done/xarg)*(done + ((2.0_real64 - mu)/ltol) &
+            & *log(done-xarg)))
+
+    end function fobjective
 
   end function dwright_vec
 
@@ -236,8 +347,8 @@ contains
     integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N_,k,l,m,info
-    real(real32) :: h,gamma
+    integer :: N_,k,ll,m,info
+    real(real32) :: h,gamma,xi,c,l,ltol
     complex(real32) :: sk
     complex(real32), allocatable, dimension(:) :: uk,zk,zpk
 
@@ -249,18 +360,30 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    if ( present(N) ) then
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-6_real32)
+    if (present(N)) then
       N_ = N
+      h = (4.0_real32*l)/(D_PI*real(N_*N_,real32))
+      gamma = (D_PI*D_PI*real(N_*N_,real32))/(16.0_real32*t*l)
     else
-      N_ = floor(-(3.0_real32)/((2.0_real32)*S_PI)*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real32) then
+        N_ = floor((sqrt(2.0_real32*l*ltol))/S_PI,kind=kind(N))
+        h = (4.0_real32*l)/(S_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(16.0_real32*t*l)
+      else
+        N_ = fminbnd(0.1_real32, 0.99_real32, 0.5_real32, 200.0_real32, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective, c)
+        xi = 2.0_real32/(sone + ((2.0_real32-mu)/ltol)*log(sone-c))
+        h = ((2.0_real32+xi*c)*l)/(S_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(((2.0_real32+xi*c)**2)*t*l)
+      end if
+
     end if
 
     allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
     if( info.ne.0 ) &
       & write(error_unit,'("ERROR: In allocation temporary vectors")')
-
-    h = (3.0_real32)/real(N_,real32)
-    gamma = (D_PI*real(N_,real32))/(12.0_real32*t);
 
     do k=-N_,N_
       uk(k+N_+1) = real(k,real32)*h
@@ -268,12 +391,27 @@ contains
       zpk(k+N_+1) = (2.0_real32)*gamma*donei*(donei*uk(k+N_+1) + done)
     end do
 
-    do l=1,m
-        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
-        w(l) = RealPart(h*sk/((2.0_real32)*S_PI*donei))
+    do ll=1,m
+        sk = sum(exp(zk*t - abs(x(ll))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(ll) = RealPart(h*sk/((2.0_real32)*S_PI*donei))
     end do
 
     deallocate(uk,zk,zpk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real32
+      implicit none
+
+      real(real32) :: xarg
+      real(real32) :: f
+
+      f = (sqrt(l*ltol)/S_PI)* &
+            & sqrt( sone + (sone/xarg)*(sone + ((2.0_real32 - mu)/ltol) &
+            & *log(sone-xarg)))
+
+    end function fobjective
 
   end function swright_vec
 
@@ -288,8 +426,8 @@ contains
     integer, optional :: N ! Optional to arbitrarly set the number of quadrature points
 
     ! Internal variables
-    integer :: N_,k,l,m,info
-    real(real128) :: h,gamma
+    integer :: N_,k,ll,m,info
+    real(real128) :: h,gamma,xi,c,l,ltol
     complex(real128) :: sk
     complex(real128), allocatable, dimension(:) :: uk,zk,zpk
 
@@ -301,18 +439,30 @@ contains
       write(error_unit,'("ERROR: Mismatch in I/O Array Lenght")')
     end if
 
-    if ( present(N) ) then
+    l    = -log(epsilon(x))
+    ltol = -log(1.0e-30_real128)
+    if (present(N)) then
       N_ = N
+      h = (4.0_real128*l)/(D_PI*real(N_*N_,real128))
+      gamma = (D_PI*D_PI*real(N_*N_,real128))/(16.0_real128*t*l);
     else
-      N_ = floor(-(3.0_real128)/((2.0_real128)*T_PI)*log(epsilon(x)),kind=kind(N));
+      if (mu <= 2.0_real128) then
+        N_ = floor((sqrt(2.0_real128*l*ltol))/T_PI,kind=kind(N))
+        h = (4.0_real128*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(16.0_real128*t*l)
+      else
+        N_ = fminbnd(0.1_real128, 0.99_real128, 0.5_real128, 200.0_real128, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective, c)
+        xi = 2.0_real128/(tone + ((2.0_real128-mu)/ltol)*log(tone-c))
+        h = ((2.0_real128+xi*c)*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(((2.0_real128+xi*c)**2)*t*l)
+      end if
+
     end if
 
     allocate(uk(2*N_+1),zk(2*N_+1),zpk(2*N_+1),stat=info)
     if( info.ne.0 ) &
       & write(error_unit,'("ERROR: In allocation temporary vectors")')
-
-    h = (3.0_real128)/real(N_,real128)
-    gamma = (T_PI*real(N_,real128))/(12.0_real128*t);
 
     do k=-N_,N_
       uk(k+N_+1) = real(k,real128)*h
@@ -320,12 +470,27 @@ contains
       zpk(k+N_+1) = (2.0_real128)*gamma*donei*(donei*uk(k+N_+1) + done)
     end do
 
-    do l=1,m
-        sk = sum(exp(zk*t - abs(x(l))*(zk**(-lambda)))*(zk**(-mu))*zpk)
-        w(l) = RealPart(h*sk/((2.0_real128)*T_PI*donei))
+    do ll=1,m
+        sk = sum(exp(zk*t - abs(x(ll))*(zk**(-lambda)))*(zk**(-mu))*zpk)
+        w(ll) = RealPart(h*sk/((2.0_real128)*T_PI*donei))
     end do
 
     deallocate(uk,zk,zpk)
+
+  contains
+
+    function fobjective(xarg) result(f)
+      use iso_fortran_env, only: real128
+      implicit none
+
+      real(real128) :: xarg
+      real(real128) :: f
+
+      f = (sqrt(l*ltol)/T_PI)* &
+            & sqrt( tone + (tone/xarg)*(tone + ((2.0_real128 - mu)/ltol) &
+            & *log(tone-xarg)))
+
+    end function fobjective
 
   end function twright_vec
 

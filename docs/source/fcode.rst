@@ -12,6 +12,14 @@ counterparts with respect to the :math:`x` variable. They are all
 
 .. f:autosrcfile:: wrightmod.f90
 
+Brent's algorithm for constrained minimization
+----------------------------------------------
+
+To compute the :math:`\xi` parameter needed for the parabolic contour we need
+to solve a box-constrained optimization problem. For this task we use Brent's
+algorithm for optimization without derivatives.
+
+.. f:autosrcfile:: brentmod.f90
 
 .. toctree::
    :maxdepth: 2

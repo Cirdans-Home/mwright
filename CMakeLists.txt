@@ -15,7 +15,7 @@ option(DEBUG "Set ON to enable debug prints" OFF)
 # ---------------------------------------------------------------------------- #
 # Compile the Library                                                          #
 # ---------------------------------------------------------------------------- #
-add_library(wright STATIC src/wright.c src/wrightmod.f90)
+add_library(wright STATIC src/wright.c src/brentmod.f90 src/wrightmod.f90)
 target_include_directories(wright PUBLIC
 	"${PROJECT_BINARY_DIR}")
 target_link_libraries(wright PUBLIC "-larb -lflint -lm")
@@ -26,6 +26,9 @@ endif()
 # ---------------------------------------------------------------------------- #
 # Compile the Tests                                                            #
 # ---------------------------------------------------------------------------- #
+add_executable(optimalxitest test/optimalxitest.f90)
+target_link_libraries(optimalxitest PUBLIC wright)
+
 add_executable(wrighttest test/wrighttest.c)
 target_link_libraries(wrighttest PUBLIC wright)
 add_custom_command(
@@ -37,10 +40,10 @@ add_custom_command(
 add_executable(zwrighttest test/zwrighttest.c)
 target_link_libraries(zwrighttest PUBLIC wright)
 
-add_executable(mainarditest test/mainarditest.f90 src/wrightmod.f90)
+add_executable(mainarditest test/mainarditest.f90 src/brentmod.f90 src/wrightmod.f90)
 target_link_libraries(wrighttest PUBLIC wright)
 
-add_executable(quadtest test/quadtest.f90 src/wrightmod.f90)
+add_executable(quadtest test/quadtest.f90 src/brentmod.f90 src/wrightmod.f90)
 target_link_libraries(wrighttest PUBLIC wright)
 
 # ---------------------------------------------------------------------------- #
