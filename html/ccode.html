@@ -1,0 +1,245 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>C Routines &#8212; Wright 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fortran Routines" href="fcode.html" />
+    <link rel="prev" title="Welcome to Wright’s documentation!" href="index.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="fcode.html" title="Fortran Routines"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Wright’s documentation!"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">C Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="c-routines">
+<h1>C Routines<a class="headerlink" href="#c-routines" title="Permalink to this headline">¶</a></h1>
+<p>Here we report the functions available in C in the library. In particular,
+these are the functions that make use of the ARB library
+(<a class="reference external" href="https://arblib.org/">arblib.org</a>)
+for arbitrary-precision ball arithmetic.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.wrightseries">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">wrightseries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">arb_t</span></span><span class="w"> </span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">arb_t</span></span><span class="w"> </span><span class="n"><span class="pre">lambda</span></span>, <span class="n"><span class="pre">arb_t</span></span><span class="w"> </span><span class="n"><span class="pre">mu</span></span>, <span class="n"><span class="pre">slong</span></span><span class="w"> </span><span class="n"><span class="pre">prec</span></span>, <span class="n"><span class="pre">slong</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">arb_t</span></span><span class="w"> </span><span class="n"><span class="pre">w</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.wrightseries" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>WRIGHTSERIES computes the Wright function using the series formulation and the ARB
+library with interval arithmetic in high-precision. This version is used to
+compare the results obtained with the inversion of the Laplace transform for
+some of the cases for which we do not have a closed form expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>x The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>t The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>lambda First parameter of the Wright function</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>mu Second parameter of the Wright function</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>prec Precision parameter for the ARB library</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>n Number of terms of the series to be used</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>w Variable containing the output of the computation</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>info 0 for correct run, 1 otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.zwrightseries">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">zwrightseries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">acb_t</span></span><span class="w"> </span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">arb_t</span></span><span class="w"> </span><span class="n"><span class="pre">lambda</span></span>, <span class="n"><span class="pre">acb_t</span></span><span class="w"> </span><span class="n"><span class="pre">mu</span></span>, <span class="n"><span class="pre">slong</span></span><span class="w"> </span><span class="n"><span class="pre">prec</span></span>, <span class="n"><span class="pre">slong</span></span><span class="w"> </span><span class="n"><span class="pre">n</span></span>, <span class="n"><span class="pre">acb_t</span></span><span class="w"> </span><span class="n"><span class="pre">w</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.zwrightseries" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>ZWRIGHTSERIES computes the Wright function using the series formulation and the ARB
+library with interval arithmetic in high-precision. This version is used to
+compare the results obtained with the inversion of the Laplace transform for
+some of the cases for which we do not have a closed form expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>x The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>t The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>lambda First parameter of the Wright function</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>mu Second parameter of the Wright function (complex)</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>prec Precision parameter for the ARB library</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>n Number of terms of the series to be used</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>w Variable containing the output of the computation</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>info 0 for correct run, 1 otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="index.html"
+                          title="Previous page">&larr; Welcome to Wright’s documentation!</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="fcode.html"
+                          title="Next page">&rarr; Fortran Routines</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ccode.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="fcode.html" title="Fortran Routines"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Wright’s documentation!"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">C Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Fabio Durastante, Lidia Aceto.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

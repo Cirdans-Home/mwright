@@ -1,0 +1,198 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>MATLAB Routines &#8212; Wright 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Test Programs" href="testprograms.html" />
+    <link rel="prev" title="Fortran Routines" href="fcode.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="testprograms.html" title="Test Programs"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="fcode.html" title="Fortran Routines"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">MATLAB Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-msrc">
+<span id="matlab-routines"></span><h1>MATLAB Routines<a class="headerlink" href="#module-msrc" title="Permalink to this headline">¶</a></h1>
+<dl class="mat function">
+<dt class="sig sig-object mat" id="msrc.mwright">
+<span class="sig-prename descclassname"><span class="pre">msrc.</span></span><span class="sig-name descname"><span class="pre">mwright</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#msrc.mwright" title="Permalink to this definition">¶</a></dt>
+<dd><p>MWRIGHT This routine computes the Wright function on the real line:
+<span class="math notranslate nohighlight">\(t^{-\lambda} W_{\lambda,\mu}(-|x|t^{-\lambda})\)</span></p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param</dt>
+<dd class="field-odd"><p>x (may be a vector)</p>
+</dd>
+<dt class="field-even">param</dt>
+<dd class="field-even"><p>t has to be a scalar &gt; 0</p>
+</dd>
+<dt class="field-odd">param</dt>
+<dd class="field-odd"><p>-1 &lt; lambda &lt; 0</p>
+</dd>
+<dt class="field-even">param</dt>
+<dd class="field-even"><p>mu scalar</p>
+</dd>
+<dt class="field-odd">param</dt>
+<dd class="field-odd"><p>Optional, the number of quadrature points N</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>w and number of used quadrature points N</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="fcode.html"
+                          title="Previous page">&larr; Fortran Routines</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="testprograms.html"
+                          title="Next page">&rarr; Test Programs</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/mcode.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="testprograms.html" title="Test Programs"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="fcode.html" title="Fortran Routines"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">MATLAB Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Fabio Durastante, Lidia Aceto.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

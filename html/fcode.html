@@ -1,0 +1,754 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Fortran Routines &#8212; Wright 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MATLAB Routines" href="mcode.html" />
+    <link rel="prev" title="C Routines" href="ccode.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mcode.html" title="MATLAB Routines"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="ccode.html" title="C Routines"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Fortran Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="fortran-routines">
+<h1>Fortran Routines<a class="headerlink" href="#fortran-routines" title="Permalink to this headline">¶</a></h1>
+<p>This is the documentation of the Fortran routines for calculating the Wright
+function. Unlike their counterpart in C, they use ordinary arithmetic with
+different types of precision (32,64,128) for the calculation.</p>
+<p>We have implemented both the scalar version of the function, and the vectorized
+counterparts with respect to the <span class="math notranslate nohighlight">\(x\)</span> variable. They are all
+<em>private</em> inside the module, and are accesible from a unique interface called
+<cite>wright</cite>.</p>
+<p class="rubric">Module</p>
+<span class="target" id="f/wrightmod"></span><p class="rubric">Description</p>
+<p>Module containg the implementation of the routines for computing the Wright
+function on the real line.</p>
+<p class="rubric">Quick access</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/wrightmod/d_pi" title="f/wrightmod/d_pi"><code class="xref f f-var docutils literal notranslate"><span class="pre">d_pi</span></code></a>, <a class="reference internal" href="#f/wrightmod/done" title="f/wrightmod/done"><code class="xref f f-var docutils literal notranslate"><span class="pre">done</span></code></a>, <a class="reference internal" href="#f/wrightmod/donei" title="f/wrightmod/donei"><code class="xref f f-var docutils literal notranslate"><span class="pre">donei</span></code></a>, <a class="reference internal" href="#f/wrightmod/s_pi" title="f/wrightmod/s_pi"><code class="xref f f-var docutils literal notranslate"><span class="pre">s_pi</span></code></a>, <a class="reference internal" href="#f/wrightmod/sone" title="f/wrightmod/sone"><code class="xref f f-var docutils literal notranslate"><span class="pre">sone</span></code></a>, <a class="reference internal" href="#f/wrightmod/sonei" title="f/wrightmod/sonei"><code class="xref f f-var docutils literal notranslate"><span class="pre">sonei</span></code></a>, <a class="reference internal" href="#f/wrightmod/t_pi" title="f/wrightmod/t_pi"><code class="xref f f-var docutils literal notranslate"><span class="pre">t_pi</span></code></a>, <a class="reference internal" href="#f/wrightmod/tone" title="f/wrightmod/tone"><code class="xref f f-var docutils literal notranslate"><span class="pre">tone</span></code></a>, <a class="reference internal" href="#f/wrightmod/tonei" title="f/wrightmod/tonei"><code class="xref f f-var docutils literal notranslate"><span class="pre">tonei</span></code></a></p>
+</dd>
+<dt class="field-even">Routines</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/wrightmod/dwright" title="f/wrightmod/dwright"><code class="xref f f-func docutils literal notranslate"><span class="pre">dwright()</span></code></a>, <a class="reference internal" href="#f/wrightmod/dwright_vec" title="f/wrightmod/dwright_vec"><code class="xref f f-func docutils literal notranslate"><span class="pre">dwright_vec()</span></code></a>, <a class="reference internal" href="#f/wrightmod/swright" title="f/wrightmod/swright"><code class="xref f f-func docutils literal notranslate"><span class="pre">swright()</span></code></a>, <a class="reference internal" href="#f/wrightmod/swright_vec" title="f/wrightmod/swright_vec"><code class="xref f f-func docutils literal notranslate"><span class="pre">swright_vec()</span></code></a>, <a class="reference internal" href="#f/wrightmod/twright" title="f/wrightmod/twright"><code class="xref f f-func docutils literal notranslate"><span class="pre">twright()</span></code></a>, <a class="reference internal" href="#f/wrightmod/twright_vec" title="f/wrightmod/twright_vec"><code class="xref f f-func docutils literal notranslate"><span class="pre">twright_vec()</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">real32()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real64()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real128()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">error_unit()</span></code>)</p></li>
+<li><p><a class="reference internal" href="#f/brentmod" title="f/brentmod: This module contains the implementation of Brent's algorithm for the minimization of a function :math:`f(x)` in the interval :math:`[a,b]`."><code class="xref f f-mod docutils literal notranslate"><span class="pre">brentmod</span></code></a> (<code class="xref f f-func docutils literal notranslate"><span class="pre">fminbnd()</span></code>): This module contains the implementation of Brent’s algorithm for the minimization of a function <span class="math notranslate nohighlight">\(f(x)\)</span> in the interval <span class="math notranslate nohighlight">\([a,b]\)</span>.</p></li>
+</ul>
+<p class="rubric">Variables</p>
+<ul>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/d_pi">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">d_pi</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=3.141592653589793_real64</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/d_pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/done">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">done</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=1.0_real64</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/done" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/donei">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">donei</span></span><em> <span class="pre">[</span></em><em><span class="pre">complex</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=(0.0</span></em><em><span class="pre">,</span></em><em><span class="pre">1.0_real64)</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/donei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/s_pi">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">s_pi</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=3.14159265_real32</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/s_pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/sone">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">sone</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=1.0_real32</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/sone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/sonei">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">sonei</span></span><em> <span class="pre">[</span></em><em><span class="pre">complex</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=(0.0</span></em><em><span class="pre">,</span></em><em><span class="pre">1.0_real32)</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/sonei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/t_pi">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">t_pi</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=3.1415926535897932384626433832795_real128</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/t_pi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/tone">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">tone</span></span><em> <span class="pre">[</span></em><em><span class="pre">real</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=1.0_real128</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/tone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+<li><dl class="f variable">
+<dt class="sig sig-object f" id="f/wrightmod/tonei">
+<span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">tonei</span></span><em> <span class="pre">[</span></em><em><span class="pre">complex</span></em><em><span class="pre">,</span></em><em><span class="pre">private/parameter/optional/default=(0.0</span></em><em><span class="pre">,</span></em><em><span class="pre">1.0_real128)</span></em><em><span class="pre">]</span></em><a class="headerlink" href="#f/wrightmod/tonei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p class="rubric">Subroutines and functions</p>
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/dwright">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">dwright</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/dwright" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional, number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong><em> [</em><em>real</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/swright">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">swright</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/swright" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional, number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong><em> [</em><em>real</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/twright">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">twright</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/twright" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional, number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong><em> [</em><em>real</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/dwright_vec">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">dwright_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/dwright_vec" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (*)<em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional to arbitrarly set the number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong> (*)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/swright_vec">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">swright_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/swright_vec" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (*)<em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional to arbitrarly set the number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong> (*)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/wrightmod/twright_vec">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">wrightmod/</span></span><span class="sig-name descname"><span class="pre">twright_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">lambda</span></em>, <em class="sig-param"><span class="pre">mu</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">n</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#f/wrightmod/twright_vec" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (*)<em> [</em><em>real</em><em>]</em> :: The <cite>x</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em> :: The <cite>t</cite> in the argument <span class="math notranslate nohighlight">\(-|x|t^\lambda\)</span> ( <span class="math notranslate nohighlight">\(t &gt; 0\)</span> )</p></li>
+<li><p><strong>lambda</strong><em> [</em><em>real</em><em>]</em> :: First parameter of the Wright function</p></li>
+<li><p><strong>mu</strong><em> [</em><em>real</em><em>]</em> :: Second parameter of the Wright function</p></li>
+<li><p><strong>n</strong><em> [</em><em>integer</em><em>]</em> :: Optional to arbitrarly set the number of quadrature points</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>w</strong> (*)<em> [</em><em>real</em><em>,</em><em>allocatable</em><em>]</em> :: <span class="math notranslate nohighlight">\(t^{\mu - 1} W_{\lambda,\mu} (-|x|t^{\lambda})\)</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="brent-s-algorithm-for-constrained-minimization">
+<h2>Brent’s algorithm for constrained minimization<a class="headerlink" href="#brent-s-algorithm-for-constrained-minimization" title="Permalink to this headline">¶</a></h2>
+<p>To compute the <span class="math notranslate nohighlight">\(\xi\)</span> parameter needed for the parabolic contour we need
+to solve a box-constrained optimization problem. For this task we use Brent’s
+algorithm for optimization without derivatives.</p>
+<p class="rubric">Module</p>
+<span class="target" id="f/brentmod"></span><p class="rubric">Description</p>
+<p>This module contains the implementation of Brent’s algorithm for the
+minimization of a function <span class="math notranslate nohighlight">\(f(x)\)</span> in the interval <span class="math notranslate nohighlight">\([a,b]\)</span>.</p>
+<p>The implementation is the one from:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Original FORTRAN77 version by Richard Brent.
+FORTRAN90 version by John Burkardt.</p>
+</div>
+<p>See: <a class="reference external" href="https://people.math.sc.edu/Burkardt/f_src/brent/brent.html">https://people.math.sc.edu/Burkardt/f_src/brent/brent.html</a></p>
+<p class="rubric">Quick access</p>
+<dl class="field-list simple">
+<dt class="field-odd">Routines</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min_rc" title="f/brentmod/slocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero_rc" title="f/brentmod/szero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min_rc" title="f/brentmod/tlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero_rc" title="f/brentmod/tzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero_rc()</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Needed modules</p>
+<ul class="simple">
+<li><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">real32()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real64()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real128()</span></code>)</p></li>
+</ul>
+<p class="rubric">Variables</p>
+<p class="rubric">Subroutines and functions</p>
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/dglomin">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">dglomin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">c</span></em>, <em class="sig-param"><span class="pre">m</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">e</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/dglomin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>c</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>m</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>e</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>dglomin</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Call to</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/dlocal_min">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">dlocal_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">eps</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/dlocal_min" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>eps</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>dlocal_min</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/dlocal_min_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">dlocal_min_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/dlocal_min_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/dzero">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">dzero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/dzero" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>dzero</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/dzero_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">dzero_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/dzero_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/sglomin">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">sglomin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">c</span></em>, <em class="sig-param"><span class="pre">m</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">e</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/sglomin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>c</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>m</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>e</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>sglomin</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/slocal_min">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">slocal_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">eps</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/slocal_min" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>eps</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>slocal_min</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/slocal_min_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">slocal_min_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/slocal_min_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/szero">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">szero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/szero" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>szero</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min_rc" title="f/brentmod/slocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min_rc()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/szero_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">szero_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/szero_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/tglomin">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">tglomin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">c</span></em>, <em class="sig-param"><span class="pre">m</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">e</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/tglomin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>c</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>m</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>e</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>tglomin</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min_rc" title="f/brentmod/slocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero_rc" title="f/brentmod/szero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero_rc()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/tlocal_min">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">tlocal_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">eps</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/tlocal_min" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>eps</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>x</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>tlocal_min</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min_rc" title="f/brentmod/slocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero_rc" title="f/brentmod/szero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a></p>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/tlocal_min_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">tlocal_min_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/tlocal_min_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Call to</dt>
+<dd class="field-even"><p><a class="reference internal" href="#f/brentmod/tzero" title="f/brentmod/tzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">tzero()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/tzero">
+<em class="property"><span class="pre">function</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">tzero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">machep</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/tzero" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>machep</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>f</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return</dt>
+<dd class="field-even"><p><strong>tzero</strong><em> [</em><em>real</em><em>]</em></p>
+</dd>
+<dt class="field-odd">Called from</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#f/brentmod/dglomin" title="f/brentmod/dglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">dglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min" title="f/brentmod/dlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/dlocal_min_rc" title="f/brentmod/dlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dlocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero" title="f/brentmod/dzero"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero()</span></code></a>, <a class="reference internal" href="#f/brentmod/dzero_rc" title="f/brentmod/dzero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">dzero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/sglomin" title="f/brentmod/sglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">sglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min" title="f/brentmod/slocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/slocal_min_rc" title="f/brentmod/slocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">slocal_min_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero" title="f/brentmod/szero"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero()</span></code></a>, <a class="reference internal" href="#f/brentmod/szero_rc" title="f/brentmod/szero_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">szero_rc()</span></code></a>, <a class="reference internal" href="#f/brentmod/tglomin" title="f/brentmod/tglomin"><code class="xref f f-func docutils literal notranslate"><span class="pre">tglomin()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min" title="f/brentmod/tlocal_min"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min()</span></code></a>, <a class="reference internal" href="#f/brentmod/tlocal_min_rc" title="f/brentmod/tlocal_min_rc"><code class="xref f f-func docutils literal notranslate"><span class="pre">tlocal_min_rc()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/brentmod/tzero_rc">
+<em class="property"><span class="pre">subroutine</span>&#160; </em><span class="sig-prename descclassname"><span class="pre">brentmod/</span></span><span class="sig-name descname"><span class="pre">tzero_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em>, <em class="sig-param"><span class="pre">b</span></em>, <em class="sig-param"><span class="pre">t</span></em>, <em class="sig-param"><span class="pre">arg</span></em>, <em class="sig-param"><span class="pre">status</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#f/brentmod/tzero_rc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>b</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>t</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>arg</strong><em> [</em><em>real</em><em>]</em></p></li>
+<li><p><strong>status</strong><em> [</em><em>integer</em><em>]</em></p></li>
+<li><p><strong>value</strong><em> [</em><em>real</em><em>]</em></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Fortran Routines</a><ul>
+<li><a class="reference internal" href="#brent-s-algorithm-for-constrained-minimization">Brent’s algorithm for constrained minimization</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="ccode.html"
+                          title="Previous page">&larr; C Routines</a></p>
+  </div>
+  <div class="sphinxnext">
+    <h4>Next page</h4>
+    <p class="topless"><a href="mcode.html"
+                          title="Next page">&rarr; MATLAB Routines</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/fcode.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mcode.html" title="MATLAB Routines"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="ccode.html" title="C Routines"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Fortran Routines</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Fabio Durastante, Lidia Aceto.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>

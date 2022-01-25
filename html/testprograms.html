@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Test Programs &#8212; Wright 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/cloud.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noticia+Text:400,i,b,bi|Open+Sans:400,i,b,bi|Roboto+Mono:400,i,b,bi&amp;display=swap" type="text/css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    
+    
+     
+        <script src="_static/jquery.cookie.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.base.js"></script>
+    
+
+    
+     
+        <script src="_static/cloud.js"></script>
+    
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MATLAB Routines" href="mcode.html" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+    <div class="relbar-top">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mcode.html" title="MATLAB Routines"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Test Programs</a></li> 
+      </ul>
+    </div>
+    </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="test-programs">
+<h1>Test Programs<a class="headerlink" href="#test-programs" title="Permalink to this headline">¶</a></h1>
+<p>We collect here the different test programs. These are the codes used to
+generate the examples in the paper.</p>
+<section id="c-test">
+<h2>C test<a class="headerlink" href="#c-test" title="Permalink to this headline">¶</a></h2>
+<p>Test for the computation of the Wright function with high precision series
+representation.</p>
+<dl class="c function">
+<dt class="sig sig-object c" id="c.main">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">main</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.main" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This test program contains the test for the computation of the Wright
+Function using the series representation and the intervall arithmetic as
+implementend in the ARB libray. The input has to be given from stdin as
+<code class="code docutils literal notranslate"><span class="pre">./wrighttest</span> <span class="pre">λ</span> <span class="pre">μ</span> <span class="pre">n</span> <span class="pre">prec</span> <span class="pre">inputfile</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p><span class="math notranslate nohighlight">\(\lambda\)</span> with <span class="math notranslate nohighlight">\(\lambda \in (-1,0)\)</span>,</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\mu\)</span> with <span class="math notranslate nohighlight">\(\mu \in \mathbb{R}\)</span></p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p><span class="math notranslate nohighlight">\(n\)</span> number of terms in the series</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>prec: ARB precision parameter</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>inputfile path of the file containing the input</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File wrighttest.out with the computed values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>Test for the computation of the Wright function with high precision series
+representation.</p>
+<dl class="c function">
+<dt class="sig sig-object c">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">main</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argc</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>This test program contains the test for the computation of the Wright
+Function using the series representation and the intervall arithmetic as
+implementend in the ARB libray. The input has to be given from stdin as
+<code class="code docutils literal notranslate"><span class="pre">./zwrighttest</span> <span class="pre">λ</span> <span class="pre">Re(μ)</span> <span class="pre">Im(μ)</span> <span class="pre">n</span> <span class="pre">prec</span> <span class="pre">inputfile</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p><span class="math notranslate nohighlight">\(\lambda\)</span> with <span class="math notranslate nohighlight">\(\lambda \in (-1,0)\)</span>,</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(\Re(\mu)\)</span> with <span class="math notranslate nohighlight">\(\mu \in \mathbb{C}\)</span></p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p><span class="math notranslate nohighlight">\(\Im(\mu)\)</span> with <span class="math notranslate nohighlight">\(\mu \in \mathbb{C}\)</span></p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(n\)</span> number of terms in the series</p>
+</dd>
+<dt class="field-odd">Param</dt>
+<dd class="field-odd"><p>prec: ARB precision parameter</p>
+</dd>
+<dt class="field-even">Param</dt>
+<dd class="field-even"><p>inputfile path of the file containing the input</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>File wrighttest.out with the computed values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="fortran-test">
+<h2>Fortran test<a class="headerlink" href="#fortran-test" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt class="sig sig-object f" id="f/mainarditest">
+<em class="property"><span class="pre">program</span>&#160; </em><span class="sig-name descname"><span class="pre">mainarditest</span></span><a class="headerlink" href="#f/mainarditest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This test program produces information relative to the error analysis in
+double and quadruple precision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Use </dt>
+<dd class="field-odd"><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code>, <a class="reference internal" href="fcode.html#f/wrightmod" title="f/wrightmod: Module containg the implementation of the routines for computing the Wright function on the real line."><code class="xref f f-mod docutils literal notranslate"><span class="pre">wrightmod</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object f" id="f/quadtest">
+<em class="property"><span class="pre">program</span>&#160; </em><span class="sig-name descname"><span class="pre">quadtest</span></span><a class="headerlink" href="#f/quadtest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This test program checks the approximation in quadruple precision for values
+that do not have a closed form expression.
+Usage is:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">./quadtest</span> <span class="pre">N</span> <span class="pre">λ</span> <span class="pre">μ</span></code></p></li>
+</ul>
+<p>All three parameters are optional. The first one sets the number of
+quadrature points, λ μ are the parameters of the Wright function.
+The test can be called as:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">./quadtest</span> <span class="pre">N</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./quadtest</span> <span class="pre">N</span> <span class="pre">λ</span> <span class="pre">μ</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./quadtest</span> <span class="pre">λ</span> <span class="pre">μ</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">./quadtest</span></code></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Use </dt>
+<dd class="field-odd"><p><code class="xref f f-mod docutils literal notranslate"><span class="pre">iso_fortran_env</span></code> (<code class="xref f f-func docutils literal notranslate"><span class="pre">real32()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real64()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">real128()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">error_unit()</span></code>, <code class="xref f f-func docutils literal notranslate"><span class="pre">output_unit()</span></code>), <a class="reference internal" href="fcode.html#f/wrightmod" title="f/wrightmod: Module containg the implementation of the routines for computing the Wright function on the real line."><code class="xref f f-mod docutils literal notranslate"><span class="pre">wrightmod</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-msrc">
+<span id="matlab-tests"></span><h2>MATLAB tests<a class="headerlink" href="#module-msrc" title="Permalink to this headline">¶</a></h2>
+<dl class="mat script">
+<dt class="sig sig-object mat" id="msrc.convergence">
+<span class="sig-prename descclassname"><span class="pre">msrc.</span></span><span class="sig-name descname"><span class="pre">convergence</span></span><a class="headerlink" href="#msrc.convergence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convergence for the Matlab Implementation
+This test verifies the convergence for the MATLAB implementation with
+respect to closed form solutions for the Mainardi version of the
+function.</p>
+</dd></dl>
+
+<dl class="mat script">
+<dt class="sig sig-object mat" id="msrc.convergencecfunction">
+<span class="sig-prename descclassname"><span class="pre">msrc.</span></span><span class="sig-name descname"><span class="pre">convergencecfunction</span></span><a class="headerlink" href="#msrc.convergencecfunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convergence with respect to the values computed with the ARB series
+This test uses the implementation with the ARB library of the series to 
+compute benchmark values for the comparison with the approach given by
+the inversion of the Laplace transform - Real Value os <span class="math notranslate nohighlight">\(\mu\)</span></p>
+</dd></dl>
+
+<dl class="mat script">
+<dt class="sig sig-object mat" id="msrc.convergencecfunctioncomplex">
+<span class="sig-prename descclassname"><span class="pre">msrc.</span></span><span class="sig-name descname"><span class="pre">convergencecfunctioncomplex</span></span><a class="headerlink" href="#msrc.convergencecfunctioncomplex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convergence with respect to the values computed with the ARB series
+This test uses the implementation with the ARB library of the series to 
+compute benchmark values for the comparison with the approach given by
+the inversion of the Laplace transform - Complex values of <span class="math notranslate nohighlight">\(\mu\)</span></p>
+</dd></dl>
+
+<dl class="mat script">
+<dt class="sig sig-object mat" id="msrc.cauchy">
+<span class="sig-prename descclassname"><span class="pre">msrc.</span></span><span class="sig-name descname"><span class="pre">cauchy</span></span><a class="headerlink" href="#msrc.cauchy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cauchy Problem
+Solution of the Cauchy problem using the Wright function representation
+of the solution</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sphinx-toc sphinxlocaltoc">
+    <h3><a href="index.html">Page contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Test Programs</a><ul>
+<li><a class="reference internal" href="#c-test">C test</a></li>
+<li><a class="reference internal" href="#fortran-test">Fortran test</a></li>
+<li><a class="reference internal" href="#module-msrc">MATLAB tests</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div class="sphinxprev">
+    <h4>Previous page</h4>
+    <p class="topless"><a href="mcode.html"
+                          title="Previous page">&larr; MATLAB Routines</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/testprograms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+    
+    
+        <div class="sidebar-toggle-group no-js">
+            
+            <button class="sidebar-toggle" id="sidebar-hide" title="Hide the sidebar menu">
+                 «
+                <span class="show-for-small">hide menu</span>
+                
+            </button>
+            <button class="sidebar-toggle" id="sidebar-show" title="Show the sidebar menu">
+                
+                <span class="show-for-small">menu</span>
+                <span class="hide-for-small">sidebar</span>
+                 »
+            </button>
+        </div>
+    
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+        
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="f-modindex.html" title="Fortran Module Index"
+             >fortran modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mat-modindex.html" title="MATLAB Module Index"
+             >matlab index</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="mcode.html" title="MATLAB Routines"
+             >previous</a> &nbsp; &nbsp;</li>
+    <li><a href="index.html">Wright 1.0 documentation</a> &#187;</li>
+
+        <li class="nav-item nav-item-this"><a href="">Test Programs</a></li> 
+      </ul>
+    </div>
+    </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Fabio Durastante, Lidia Aceto.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.0.2.
+    </div>
+    <!-- cloud_sptheme 1.4 -->
+  </body>
+</html>
