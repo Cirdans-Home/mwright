@@ -88,4 +88,9 @@ if(Sphinx_FOUND)
 			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/docs
 			COMMENT "Building Sphinx documentation")
 endif()
+
+# Custom target to publish Documentation online
+add_custom_target(publish
+	COMMAND ghp-import -n -p -f ${CMAKE_CURRENT_SOURCE_DIR}/docs/build/html
+	COMMENT "Publishing documentation on GitHub Pages")
 endif()
