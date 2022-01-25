@@ -36,3 +36,5 @@ MATLAB tests
 .. mat:autoscript:: convergencecfunction
 
 .. mat:autoscript:: convergencecfunctioncomplex
+
+.. mat:autoscript:: cauchy
