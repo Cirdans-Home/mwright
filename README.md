@@ -6,7 +6,7 @@ To obtain the latest version of the code:
 ```
 git clone git@github.com:Cirdans-Home/mwright.git
 ```
-For the documentation see: [https://cirdans-home.github.io/mwright/](cirdans-home.github.io/mwright/).
+For the documentation see: https://cirdans-home.github.io/mwright/.
 
 
 ## Contributors
