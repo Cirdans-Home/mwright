@@ -1,6 +1,6 @@
-%% HeatMap for :math:`mu \in \mathbb{C}`
+%% HeatMap for :math:`\mu \in \mathbb{C}`
 % This code produces the heatmaps with the convergence results for the
-% computation of the Wright function with complex values of :math:`mu`.
+% computation of the Wright function with complex values of :math:`\mu`.
 
 lambda = linspace(-0.6,-0.1,3);
 mure = linspace(-3,3,20);
