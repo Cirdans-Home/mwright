@@ -45,6 +45,12 @@ based on the inversion of the Laplace transform.
    and :code:`sphinxcontrib.matlab`.
    This step **can be omitted** from the :code:`ccmake` settings.
 
+How to cite
+-----------
+
+Please, if you use this code for a scientific publication cite the work:
+
+- L. Aceto and F. Durastante. “Efficient computation of the Wright function and its applications to fractional diffusion-wave equations”. 2022. arXiv: `2202.00397 <https://arxiv.org/abs/2202.00397>`_
 
 .. toctree::
    :maxdepth: 2
