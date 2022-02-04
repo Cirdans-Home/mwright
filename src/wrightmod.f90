@@ -87,10 +87,18 @@ contains
       h = (4.0_real64*l)/(D_PI*real(N_*N_,real64))
       gamma = (D_PI*D_PI*real(N_*N_,real64))/(16.0_real64*t*l);
     else
-      if (mu <= 2.0_real64) then
+      if (mu < 2.0_real64) then
         N_ = floor((sqrt(2.0_real64*l*ltol))/D_PI,kind=kind(N))
         h = (4.0_real64*l)/(D_PI*N_*N_)
         gamma = (D_PI*D_PI*N_*N_)/(16.0_real64*t*l)
+      else if (mu == 2.0_real64) then
+        N_ = fminbnd(1.0_real64 - 1.0_real64/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real64, 0.5_real64, 200.0_real64, &
+          & epsilon(xi), epsilon(xi), 1.0D-4, fobjective2, c)
+        xi = 2.0_real64/(1.0_real64 + log(-log((l-ltol)* &
+          & (1.0_real64 - c)*(1.0_real64 - c)))/ltol)
+        h = ((2.0_real64+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(((2.0_real64+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real64, 0.99_real64, 0.5_real64, 200.0_real64, &
           & epsilon(xi), epsilon(xi), 1.0D-4, fobjective, c)
@@ -126,6 +134,19 @@ contains
 
     end function fobjective
 
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real64
+      implicit none
+
+      real(real64) :: xarg
+      real(real64) :: f
+
+      f = (sqrt(l*ltol)/D_PI)* &
+            & sqrt( done + (done/xarg)*(done + &
+            & log(-log( (l-ltol)*(done-xarg)*(done-xarg)))/ltol))
+
+    end function fobjective2
+
   end function dwright
 
   function swright(x,t,lambda,mu,N) result(w)
@@ -154,6 +175,14 @@ contains
         N_ = floor((sqrt(2.0_real32*l*ltol))/S_PI,kind=kind(N))
         h = (4.0_real32*l)/(S_PI*N_*N_)
         gamma = (S_PI*S_PI*N_*N_)/(16.0_real32*t*l)
+      else if (mu == 2.0_real32) then
+        N_ = fminbnd(1.0_real32 - 1.0_real32/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real32, 0.5_real32, 200.0_real32, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective2, c)
+        xi = 2.0_real32/(1.0_real32 + log(-log((l-ltol)* &
+          & (1.0_real32 - c)*(1.0_real32 - c)))/ltol)
+        h = ((2.0_real32+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(((2.0_real32+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real32, 0.99_real32, 0.5_real32, 200.0_real32, &
           & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective, c)
@@ -190,6 +219,19 @@ contains
 
     end function fobjective
 
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real32
+      implicit none
+
+      real(real32) :: xarg
+      real(real32) :: f
+
+      f = (sqrt(l*ltol)/S_PI)* &
+            & sqrt( sone + (sone/xarg)*(sone + &
+            & log(-log( (l-ltol)*(sone-xarg)*(sone-xarg)))/ltol))
+
+    end function fobjective2
+
   end function swright
 
   function twright(x,t,lambda,mu,N) result(w)
@@ -214,10 +256,18 @@ contains
       h = (4.0_real128*l)/(S_PI*real(N_*N_,real128))
       gamma = (T_PI*T_PI*real(N_*N_,real128))/(16.0_real128*t*l);
     else
-      if (mu <= 2.0_real128) then
+      if (mu < 2.0_real128) then
         N_ = floor((sqrt(2.0_real128*l*ltol))/T_PI,kind=kind(N))
         h = (4.0_real32*l)/(T_PI*N_*N_)
         gamma = (T_PI*T_PI*N_*N_)/(16.0_real128*t*l)
+      else if (mu == 2.0_real128) then
+        N_ = fminbnd(1.0_real128 - 1.0_real128/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real128, 0.5_real128, 200.0_real128, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective2, c)
+        xi = 2.0_real128/(1.0_real128 + log(-log((l-ltol)* &
+          & (1.0_real128 - c)*(1.0_real128 - c)))/ltol)
+        h = ((2.0_real128+xi*c)*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(((2.0_real128+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real128, 0.99_real128, 0.5_real128, 200.0_real128, &
           & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective, c)
@@ -254,6 +304,19 @@ contains
 
     end function fobjective
 
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real128
+      implicit none
+
+      real(real128) :: xarg
+      real(real128) :: f
+
+      f = (sqrt(l*ltol)/T_PI)* &
+            & sqrt( tone + (tone/xarg)*(tone + &
+            & log(-log( (l-ltol)*(tone-xarg)*(tone-xarg)))/ltol))
+
+    end function fobjective2
+
   end function twright
 
   ! Vectorized versions
@@ -288,10 +351,18 @@ contains
       h = (4.0_real64*l)/(D_PI*real(N_*N_,real64))
       gamma = (D_PI*D_PI*real(N_*N_,real64))/(16.0_real64*t*l);
     else
-      if (mu <= 2.0_real64) then
+      if (mu < 2.0_real64) then
         N_ = floor((sqrt(2.0_real64*l*ltol))/D_PI,kind=kind(N))
         h = (4.0_real64*l)/(D_PI*N_*N_)
         gamma = (D_PI*D_PI*N_*N_)/(16.0_real64*t*l)
+      else if (mu == 2.0_real64) then
+        N_ = fminbnd(1.0_real64 - 1.0_real64/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real64, 0.5_real64, 200.0_real64, &
+          & epsilon(xi), epsilon(xi), 1.0D-4, fobjective2, c)
+        xi = 2.0_real64/(1.0_real64 + log(-log((l-ltol)* &
+          & (1.0_real64 - c)*(1.0_real64 - c)))/ltol)
+        h = ((2.0_real64+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (D_PI*D_PI*N_*N_)/(((2.0_real64+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real64, 0.99_real64, 0.5_real64, 200.0_real64, &
           & epsilon(xi), epsilon(xi), 1.0D-4, fobjective, c)
@@ -334,6 +405,19 @@ contains
 
     end function fobjective
 
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real64
+      implicit none
+
+      real(real64) :: xarg
+      real(real64) :: f
+
+      f = (sqrt(l*ltol)/D_PI)* &
+            & sqrt( done + (done/xarg)*(done + &
+            & log(-log( (l-ltol)*(done-xarg)*(done-xarg)))/ltol))
+
+    end function fobjective2
+
   end function dwright_vec
 
   function swright_vec(x,t,lambda,mu,N) result(w)
@@ -367,10 +451,18 @@ contains
       h = (4.0_real32*l)/(D_PI*real(N_*N_,real32))
       gamma = (D_PI*D_PI*real(N_*N_,real32))/(16.0_real32*t*l)
     else
-      if (mu <= 2.0_real32) then
+      if (mu < 2.0_real32) then
         N_ = floor((sqrt(2.0_real32*l*ltol))/S_PI,kind=kind(N))
         h = (4.0_real32*l)/(S_PI*N_*N_)
         gamma = (S_PI*S_PI*N_*N_)/(16.0_real32*t*l)
+      else if (mu == 2.0_real32) then
+        N_ = fminbnd(1.0_real32 - 1.0_real32/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real32, 0.5_real32, 200.0_real32, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective2, c)
+        xi = 2.0_real32/(1.0_real32 + log(-log((l-ltol)* &
+          & (1.0_real32 - c)*(1.0_real32 - c)))/ltol)
+        h = ((2.0_real32+xi*c)*l)/(D_PI*N_*N_)
+        gamma = (S_PI*S_PI*N_*N_)/(((2.0_real32+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real32, 0.99_real32, 0.5_real32, 200.0_real32, &
           & epsilon(xi), epsilon(xi), real(1.0D-4,real32), fobjective, c)
@@ -413,6 +505,19 @@ contains
 
     end function fobjective
 
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real32
+      implicit none
+
+      real(real32) :: xarg
+      real(real32) :: f
+
+      f = (sqrt(l*ltol)/S_PI)* &
+            & sqrt( sone + (sone/xarg)*(sone + &
+            & log(-log( (l-ltol)*(sone-xarg)*(sone-xarg)))/ltol))
+
+    end function fobjective2
+
   end function swright_vec
 
   function twright_vec(x,t,lambda,mu,N) result(w)
@@ -446,10 +551,18 @@ contains
       h = (4.0_real128*l)/(D_PI*real(N_*N_,real128))
       gamma = (D_PI*D_PI*real(N_*N_,real128))/(16.0_real128*t*l);
     else
-      if (mu <= 2.0_real128) then
+      if (mu < 2.0_real128) then
         N_ = floor((sqrt(2.0_real128*l*ltol))/T_PI,kind=kind(N))
         h = (4.0_real128*l)/(T_PI*N_*N_)
         gamma = (T_PI*T_PI*N_*N_)/(16.0_real128*t*l)
+      else if (mu == 2.0_real128) then
+        N_ = fminbnd(1.0_real128 - 1.0_real128/(l-ltol) + 10.0*epsilon(l), &
+          & 0.99_real128, 0.5_real128, 200.0_real128, &
+          & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective2, c)
+        xi = 2.0_real128/(1.0_real128 + log(-log((l-ltol)* &
+          & (1.0_real128 - c)*(1.0_real128 - c)))/ltol)
+        h = ((2.0_real128+xi*c)*l)/(T_PI*N_*N_)
+        gamma = (T_PI*T_PI*N_*N_)/(((2.0_real128+xi*c)**2)*t*l)
       else
         N_ = fminbnd(0.1_real128, 0.99_real128, 0.5_real128, 200.0_real128, &
           & epsilon(xi), epsilon(xi), real(1.0D-4,real128), fobjective, c)
@@ -491,6 +604,19 @@ contains
             & *log(tone-xarg)))
 
     end function fobjective
+
+    function fobjective2(xarg) result(f)
+      use iso_fortran_env, only: real128
+      implicit none
+
+      real(real128) :: xarg
+      real(real128) :: f
+
+      f = (sqrt(l*ltol)/T_PI)* &
+            & sqrt( tone + (tone/xarg)*(tone + &
+            & log(-log( (l-ltol)*(tone-xarg)*(tone-xarg)))/ltol))
+
+    end function fobjective2
 
   end function twright_vec
 

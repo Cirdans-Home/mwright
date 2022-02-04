@@ -55,7 +55,6 @@ program mainarditest
    call mainarditest3(30)
    call mainarditest3(37)
 
-
 contains
 
    subroutine mainarditest1()
@@ -160,7 +159,7 @@ contains
          x(i) = -5.0_real128 + real((i-1),real64)*h
       end do
 
-      write(output_unit,'("(real128) With λ = 0 μ = 0 W = exp(-|z|)")')
+      write(output_unit,'("(real128) With λ = 0 μ = 1.0 W = exp(-|z|)")')
       lambda = 0.0_real128
       mu = 1.0_real128
       w = wright(x, t, lambda, mu, qnodes)
