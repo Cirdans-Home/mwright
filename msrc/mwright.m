@@ -72,7 +72,7 @@ uk = (-N:N)*h;
 w = zeros(size(x));
 zuk = z(uk);
 for k=1:length(w)
-    w(k) = (h/(2*pi*1i))*KahanBabushkaKleinSum(zuk.^(-mu).*exp( (zuk.*t) - (abs(x(k)).*zuk.^(-lambda))).*zp(uk));
+    w(k) = (h/(2*pi*1i))*sum(zuk.^(-mu).*exp( (zuk.*t) - (abs(x(k)).*zuk.^(-lambda))).*zp(uk));
 end
 
 %% Check that everything is real
@@ -80,39 +80,5 @@ if isreal(mu)
     w = real(w);
 end
 
-
-end
-
-function sum = KahanBabushkaKleinSum(input)
-%%KAHANBABUSHKAKLEINSUM Implementation of the sum algorithm from
-%
-% A., Klein (2006). "A generalized Kahan–Babuška-Summation-Algorithm".
-% Computing. Springer-Verlag. 76 (3–4): 279–293.
-% doi:10.1007/s00607-005-0139-x. S2CID 4561254.
-%
-% This should avoid cancellation
-sum = 0.0;
-cs  = 0.0;
-ccs = 0.0;
-
-for i = 1:length(input)
-    t = sum + input(i);
-    if abs(sum) >= abs(input(i))
-        c = (sum - t) + input(i);
-    else
-        c = (input(i) - t) + sum;
-    end
-    sum = t;
-    t = cs + c;
-    if abs(cs) >= abs(c)
-        cc = (cs - t) + c;
-    else
-        cc = (c - t) + cs;
-    end
-    cs = t;
-    ccs = ccs + cc;
-end
-
-sum = sum + cs + ccs;
 
 end
