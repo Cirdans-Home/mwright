@@ -3,8 +3,8 @@
 % computation of the Wright function with complex values of :math:`\mu`.
 
 lambda = linspace(-0.6,-0.1,3);
-mure = linspace(-3,3,20);
-muim = linspace(-3,3,20);
+mure = linspace(-3,3,10);
+muim = linspace(-3,3,10);
 
 n = 1000;
 prec = 128;
@@ -46,11 +46,12 @@ for l = 1:length(lambda)
     end
     figure(1)
     subplot(1,3,l)
-    hmap = heatmap(round(mure,2),round(muim,2),log10(ERR(:,:,l)));
+    hmap = heatmap(round(mure,2),round(muim,2),log10(ERR(:,:,l)),'ColorLimits',[-15,-9]);
     xlabel('Re(μ)')
     ylabel('Im(μ)');
     title(sprintf("λ = %1.2f",lambda(l)));
     hmap.CellLabelFormat = '%1.1f';
+    hmap.NodeChildren(3).YDir='normal';
     figure(2)
     subplot(1,3,l)
     heatmap(mure,muim,N(:,:,l))
