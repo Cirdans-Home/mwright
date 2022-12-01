@@ -9,9 +9,24 @@ git clone git@github.com:Cirdans-Home/mwright.git
 For the documentation see: https://cirdans-home.github.io/mwright/.
 
 The code for this repository is discussed in
-> L. Aceto and F. Durastante. “Efficient computation of the Wright function and
-its applications to fractional diffusion-wave equations”. 2022. arXiv: [2202.00397](https://arxiv.org/abs/2202.00397).
+> Efficient computation of the Wright function and its applications to fractional diffusion-wave equations
+Lidia  Aceto, Fabio  Durastante ESAIM: M2AN 56 (6) 2181-2196 (2022) DOI: [10.1051/m2an/2022069](https://www.esaim-m2an.org/articles/m2an/abs/2022/06/m2an220030/m2an220030.html)
 
+Cite as
+```
+@article{ refId0,
+	author = {{Aceto, Lidia} and {Durastante, Fabio}},
+	title = {Efficient computation of the Wright function and its applications 
+          to fractional diffusion-wave equations},
+	DOI= "10.1051/m2an/2022069",
+	url= "https://doi.org/10.1051/m2an/2022069",
+	journal = {ESAIM: M2AN},
+	year = 2022,
+	volume = 56,
+	number = 6,
+	pages = "2181-2196",
+}
+```
 
 ## Contributors
 
